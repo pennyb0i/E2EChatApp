@@ -1,0 +1,18 @@
+﻿services:
+  e2echatapp:
+    image: e2echatapp
+    build:
+      context: .
+      dockerfile: E2EChatApp/Dockerfile
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
