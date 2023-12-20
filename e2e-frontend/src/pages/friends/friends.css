@@ -14,19 +14,29 @@
     padding: 20px;
     background-color: white;
 }
+.friends-list {
+    list-style: none;
+    padding: 0;
+}
 
+.friends-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px; /* Adjust spacing between users */
+}
 
-input {
-    /* Input field styles */
-    width: 30%;
-    border: 1px solid #4b5563; /* Replace with your color */
-    padding: 0.5rem; /* Adjust as needed */
-    border-radius: 0.25rem; /* Adjust as needed */
+.request-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 button {
-    color: aqua;
-    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 0.8em;
+
 }
 
 ul {

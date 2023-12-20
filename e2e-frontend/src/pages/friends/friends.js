@@ -10,9 +10,9 @@ const Friends = () => {
     ]);
 
     const [requests, setRequests] = useState([
-        'Requests 1',
-        'Requests 2',
-        'Requests 3',
+        'Request 1',
+        'Request 2',
+        'Request 3',
     ]);
 
     const [searchValue, setSearchValue] = useState('');
@@ -23,45 +23,60 @@ const Friends = () => {
             setSearchValue(''); // Clear the search bar after adding a friend
         }
     };
+    const filteredFriends = friends.filter((friend) =>
+        friend.toLowerCase().includes(searchValue.toLowerCase())
+    )
     return (
         <>
             <Header />
             <div className="black-border-container">
-                <h1>My Friends</h1>
-
-                {/* Search bar for adding new friends */}
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Enter friend's name"
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                    <button onClick={addFriend}>Add Friend</button>
-                </div>
-
                 {/* Black-bordered window */}
                 <div className="black-bordered-window">
+                    <h1>List of Users</h1>
+                    {/* Search bar for adding new friends */}
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Enter friend's name"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                    </div>
+
                     {/* List of friends */}
-                    <ul>
-                        {friends.map((friend, index) => (
-                            <li key={index}>{friend}</li>
+                    <ul className="friends-list">
+                        {filteredFriends.map((friend, index) => (
+                            <li key={index}>
+                                <span>{friend}</span>
+                                <button onClick={() => addFriend(friend)}>
+                                    Add Friend
+                                </button>
+                            </li>
                         ))}
                     </ul>
 
                     {/* Black line separator */}
-                    <hr style={{ borderTop: '2px solid black' }} />
+                    <hr style={{borderTop: '2px solid black'}}/>
 
                     {/* Friend requests */}
                     <h1>Friend Requests</h1>
-                    <ul>
+                    <ul className="request-list">
                         {requests.map((requests, index) => (
-                            <li key={index}>{requests}</li>
+                            <li key={index}>
+                                {requests}
+                                <button onClick={() => addFriend(requests)}>
+                                    Accept
+                                </button>
+                                <button onClick={() => addFriend(requests)}>
+                                    Decline
+                                </button>
+                            </li>
                         ))}
                     </ul>
+
                 </div>
             </div>
-            </>
+        </>
     );
 };
 
