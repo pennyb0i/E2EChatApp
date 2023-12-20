@@ -2,12 +2,30 @@
     text-align: center;
     margin: 20px;
 }
+.black-border-container {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border: 3px solid black;
+}
+.black-bordered-window {
+    width: 80%;
+    max-width: 600px; /* Adjust as needed */
+    padding: 20px;
+    background-color: white;
+}
+
 
 input {
-    margin-right: 10px;
+    /* Input field styles */
+    width: 30%;
+    border: 1px solid #4b5563; /* Replace with your color */
+    padding: 0.5rem; /* Adjust as needed */
+    border-radius: 0.25rem; /* Adjust as needed */
 }
 
 button {
+    color: aqua;
     cursor: pointer;
 }
 
