@@ -1,6 +1,5 @@
 import Header from "../../components/header/header";
 import React, { useState } from 'react';
-import FriendsView from "./components/friendsView";
 
 const Friends = () => {
     const [friends, setFriends] = useState([

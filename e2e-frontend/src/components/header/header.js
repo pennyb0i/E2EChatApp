@@ -21,15 +21,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-/*
-<div>
-    <p>
-        <nav>
-            <button>Home</button>
-            <button>Friendz</button>
-            <button>Login</button>
-        </nav>
-    </p>
-</div>*/
