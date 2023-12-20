@@ -30,7 +30,7 @@ const Friends = () => {
         <>
             <Header />
             <div className="black-border-container">
-                
+
                 {/* Black-bordered window */}
                 <div className="black-bordered-window">
                     <h1>List of Users</h1>
@@ -63,15 +63,17 @@ const Friends = () => {
                     {/* Friend requests */}
                     <h1>Friend Requests</h1>
                     <ul className="request-list">
-                        {requests.map((requests, index) => (
+                        {requests.map((request, index) => (
                             <li key={index}>
-                                {requests}
-                                <button onClick={() => addFriend(requests)}>
-                                    Accept
-                                </button>
-                                <button onClick={() => addFriend(requests)}>
-                                    Decline
-                                </button>
+                                {request}
+                                <div className="button-container">
+                                    <button onClick={() => addFriend(request)}>
+                                        Accept
+                                    </button>
+                                    <button onClick={() => addFriend(request)}>
+                                        Decline
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>

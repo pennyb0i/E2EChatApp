@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="" />
+    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.css" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.js" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

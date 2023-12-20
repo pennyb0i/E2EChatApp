@@ -10,7 +10,7 @@
 }
 .black-bordered-window {
     width: 80%;
-    max-width: 600px; /* Adjust as needed */
+    max-width: 600px;
     padding: 20px;
     background-color: white;
 }
@@ -23,14 +23,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px; /* Adjust spacing between users */
+    margin-bottom: 8px;
+}
+
+.request-list {
+    list-style: none;
+    padding: 0;
 }
 
 .request-list li {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 8px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 5px;
+}
+
+.button-container button {
+    padding: 4px 8px;
+    font-size: 0.8em;
 }
 
 button {
