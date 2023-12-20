@@ -1,0 +1,29 @@
+.mainHeader {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+.mainNavLink {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.mainNavLink:hover {
+    text-decoration: underline;
+}
+.loginButton {
+    margin-left: auto; /* Pushes the "Login" button to the right */
+}
