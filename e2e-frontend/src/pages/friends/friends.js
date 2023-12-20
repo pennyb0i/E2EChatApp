@@ -30,9 +30,11 @@ const Friends = () => {
         <>
             <Header />
             <div className="black-border-container">
+                
                 {/* Black-bordered window */}
                 <div className="black-bordered-window">
                     <h1>List of Users</h1>
+
                     {/* Search bar for adding new friends */}
                     <div>
                         <input
