@@ -4,6 +4,7 @@ import Home from './pages/home/home'
 import Login from './pages/login/login'
 import Register from './pages/register/register'
 import Friends from "./pages/friends/friends";
+import Chat from "./pages/chat/chat";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
             <Route path="/friends" element={<Friends/>} />
+            <Route path="/chat" element={<Chat/>} />
         </Routes>
       </>
   );

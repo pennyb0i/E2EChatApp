@@ -1,0 +1,99 @@
+.container-left{
+    width: 200px;
+    height: 9000px;
+}
+
+.container-right{
+    width: 70%;
+    height: 500px;
+}
+
+.container{
+    display: flex;
+}
+
+.friend-list{
+    margin: 0;
+    list-style: none;
+    border-color: black;
+    padding: 0;
+}
+
+.friend-list li{
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer
+}
+
+.friend-list li:hover{
+background-color: #0084FF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+    width: auto;
+    height: 400px;
+    margin: 20px 20px;
+    overflow: auto;
+;
+}
+
+.message {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.message .user {
+    font-weight: bold;
+}
+
+.message .bubble {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    clear: both;
+}
+
+.message .user-bubble {
+    background-color: #3498db;
+    color: #fff;
+    float: left;
+}
+
+.message .other-bubble {
+    background-color: #e0e0e0;
+    float: right;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+}
+
+.input-container input {
+    display: block;
+    margin: 0;
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.input-container button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+}
