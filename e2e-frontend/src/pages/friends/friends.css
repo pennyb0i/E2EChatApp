@@ -65,3 +65,7 @@ li {
     padding: 10px;
     border: 1px solid #ccc;
 }
+
+li:hover {
+    background-color: #0084FF;
+}
