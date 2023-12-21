@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-namespace E2EChatApp.Controllers;
+namespace E2EChatApp.Application.Controllers;
 
 [ApiController]
 [Route("[controller]")]

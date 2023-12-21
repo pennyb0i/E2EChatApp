@@ -1,9 +1,8 @@
-using System.Data;
 using System.Text;
 using E2EChatApp.Application.Extensions;
+using E2EChatApp.Infrastructure.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,7 +33,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {});
 builder.Services.AddServicesAndRepositories();
 // Set up the DB connection
-builder.Services.AddTransient<IDbConnection>(new NpgsqlConnection(builder.Configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection")));
+builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
+    {
+        var config = builder.Configuration.GetSection("ConnectionStrings");
+        return new DbConnectionFactory(config.GetValue<string>("DefaultConnection")
+                                       ?? throw new NullReferenceException("Connection string cannot be null"));
+    });
 
 var app = builder.Build();
 
