@@ -5,14 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/e2e-frontend/src/services/friendsService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.css" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Controllers/UserController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.js" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-frontend/src/pages/friends/friends.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -25,6 +33,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="Laszlo/service" />
+                    <option name="lastUsedInstant" value="1703151839" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="Laszlo/friendsView" />
                     <option name="lastUsedInstant" value="1703067855" />

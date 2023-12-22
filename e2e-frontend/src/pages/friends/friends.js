@@ -1,13 +1,18 @@
 import Header from "../../components/header/header";
-import React, { useState } from 'react';
-import './friends.css'
+import React, {useEffect, useState} from 'react';
+import './friends.css';
+import { getUsers} from "../../services/friendsService";
 
 const Friends = () => {
-    const [friends, setFriends] = useState([
-        'Friend 1',
-        'Friend 2',
-        'Friend 3',
-    ]);
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        async function fetchUsers() {
+            const fetchedUsers = await getUsers();
+            setUsers(fetchedUsers);
+        }
+        fetchUsers();
+    }, []);
 
     const [requests, setRequests] = useState([
         'Request 1',
@@ -17,15 +22,20 @@ const Friends = () => {
 
     const [searchValue, setSearchValue] = useState('');
 
+    const filteredUsers = searchValue
+        ? users.filter((user) =>
+            typeof user.name === 'string' &&
+            user.name.toLowerCase().includes(searchValue.trim().toLowerCase())
+        )
+        : users;
+
     const addFriend = () => {
         if (searchValue.trim() !== '') {
-            setFriends([...friends, searchValue]);
-            setSearchValue(''); // Clear the search bar after adding a friend
+            setUsers([...users, searchValue]);
+            setSearchValue('');
         }
     };
-    const filteredFriends = friends.filter((friend) =>
-        friend.toLowerCase().includes(searchValue.toLowerCase())
-    )
+
     return (
         <>
             <Header />
@@ -39,18 +49,18 @@ const Friends = () => {
                     <div>
                         <input
                             type="text"
-                            placeholder="Enter friend's name"
+                            placeholder="Enter User name"
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                         />
                     </div>
 
-                    {/* List of friends */}
+                    {/* List of users */}
                     <ul className="friends-list">
-                        {filteredFriends.map((friend, index) => (
+                        {filteredUsers.map((user, index) => (
                             <li key={index}>
-                                <span>{friend}</span>
-                                <button onClick={() => addFriend(friend)}>
+                                <span>{user.name}</span>
+                                <button onClick={() => addFriend(user)}>
                                     Add Friend
                                 </button>
                             </li>
