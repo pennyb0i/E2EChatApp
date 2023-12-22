@@ -1,12 +1,18 @@
 import Header from "../../components/header/header";
 import "./register.css"
-
+import * as DiffieHellmanService from '../../services/diffieHellmanService';
 const Register = () => {
+    // TODO send public key to backend along with user info to complete registration
+    function handleRegister() {
+        const keyPair=DiffieHellmanService.generateECDHKeyPair();
+        localStorage.setItem('privateKey', keyPair.privateKey);
+    }
+
     return (
         <>
             <Header/>
         <div className="registerContainer">
-            <form className="registerForm">
+            <form className="registerForm" onSubmit={handleRegister}>
                 <h2>Register</h2>
                 <label htmlFor="username">Username:</label>
                 <input type="text" id="username" name="username" />
