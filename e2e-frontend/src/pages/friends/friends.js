@@ -56,16 +56,22 @@ const Friends = () => {
                     </div>
 
                     {/* List of users */}
-                    <ul className="friends-list">
-                        {filteredUsers.map((user, index) => (
-                            <li key={index}>
-                                <span>{user.name}</span>
-                                <button onClick={() => addFriend(user)}>
-                                    Add Friend
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
+                    <div>
+                        {users ? (
+                            <ul className="friends-list">
+                                {filteredUsers.map((user, index) => (
+                                    <li key={index}>
+                                        <span>{user.name}</span>
+                                        <button onClick={() => addFriend(user)}>
+                                            Add Friend
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No users available</p>
+                        )}
+                    </div>
 
                     {/* Black line separator */}
                     <hr style={{borderTop: '2px solid black'}}/>
