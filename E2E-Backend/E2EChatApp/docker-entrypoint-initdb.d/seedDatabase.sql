@@ -1,4 +1,6 @@
-DROP DATABASE IF EXISTS "chatApp";
-     
-CREATE DATABASE "chatApp";
-    
+CREATE TABLE "Users"(
+    "ID" SERIAL PRIMARY KEY,
+    "Email" varchar(64) NOT NULL,
+    "PasswordHash" bytea NOT NULL,
+    "PasswordSalt" bytea NOT NULL
+)

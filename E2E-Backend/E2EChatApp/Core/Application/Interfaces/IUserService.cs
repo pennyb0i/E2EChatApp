@@ -1,5 +1,5 @@
-using E2EChatApp.Core.Entities;
-namespace E2EChatApp.Core.Services.Interfaces;
+using E2EChatApp.Core.Domain.Models;
+namespace E2EChatApp.Core.Application.Interfaces;
 
 public interface IUserService {
     /// <summary>
@@ -7,5 +7,5 @@ public interface IUserService {
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<User> GetUserById(int id);
+    public Task<User?> GetUserById(int id);
 }

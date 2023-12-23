@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  e2echatapp:
+    build:
+      context: "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend"
+      dockerfile: "E2EChatApp/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/E2EChatApp.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "e2echatapp:dev"
+    ports: []
+    volumes:
+    - "/Users/penster/.nuget/packages:/root/.nuget/packages"
+    - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend/E2EChatApp:/app:rw"
+    - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend:/src:rw"
+    working_dir: "/app"

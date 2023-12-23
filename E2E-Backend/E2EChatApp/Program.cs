@@ -1,7 +1,11 @@
+using System.Diagnostics;
 using System.Text;
 using E2EChatApp.Application.Extensions;
+using E2EChatApp.Core.Domain.Exceptions;
+using E2EChatApp.Core.Domain.Responses;
 using E2EChatApp.Infrastructure.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +31,20 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
+// CORS config
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("Pw_WebApi",
+        builder =>
+        {
+            builder
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,6 +59,22 @@ builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     });
 
 var app = builder.Build();
+
+// Error handling
+app.UseExceptionHandler(a => a.Run(async context => {
+    var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+    var exception = exceptionHandlerPathFeature?.Error;
+    // string trace = context.TraceIdentifier;
+    var trace = Activity.Current?.Id ?? context.TraceIdentifier;
+    var statusCode = context.Response.StatusCode;
+    var type = "";
+    if (exception is RestException restException) {
+        context.Response.StatusCode = statusCode = (int)restException.Status;
+        type = restException.Code ?? "";
+    }
+
+    await context.Response.WriteAsJsonAsync(new ErrorResponse(type, statusCode, trace, exception?.Message ?? ""));
+}));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
