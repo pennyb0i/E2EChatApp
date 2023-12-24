@@ -4,15 +4,17 @@
     build:
       context: E2E-Backend
       dockerfile: E2E-Backend/E2EChatApp/Dockerfile
+    ports:
+      - 5000:80
 
   db:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
+      POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-
-  adminer:
-    image: adminer
-    restart: always
+      POSTGRES_DB: E2EDatabase
     ports:
-      - 8080:8080
+      - 5432:5432
+    volumes:
+      - ./seeds:/docker-entrypoint-initdb.d
