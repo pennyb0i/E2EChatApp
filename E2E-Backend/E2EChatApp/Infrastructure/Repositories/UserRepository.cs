@@ -18,7 +18,7 @@ public class UserRepository : IUserRepository{
     public async Task<User?> GetUserById(int id)
     {
         using var conn = await _connectionFactory.CreateAsync();
-        const string query = "SELECT * FROM Users WHERE id = @id";
+        const string query = "SELECT * FROM users WHERE id = @id";
         var user = await conn.QueryFirstOrDefaultAsync<User>(query, new {
             id
         });
@@ -28,7 +28,7 @@ public class UserRepository : IUserRepository{
     public async Task<User?> GetUserByEmail(string email)
     {
         using var conn = await _connectionFactory.CreateAsync();
-        const string query = "SELECT * FROM Users WHERE Email = @email";
+        const string query = "SELECT * FROM users WHERE Email = @email";
         var user = await conn.QueryFirstOrDefaultAsync<User>(query, new {
             email
         });
@@ -43,7 +43,7 @@ public class UserRepository : IUserRepository{
         using var conn = await _connectionFactory.CreateAsync();
         const string query = 
             """
-                INSERT INTO Users ( Email, PasswordHash, PasswordSalt )
+                INSERT INTO users ( Email, PasswordHash, PasswordSalt )
                 VALUES ( @Email, @PasswordHash, @PasswordSalt )
                 RETURNING ID;
             """;

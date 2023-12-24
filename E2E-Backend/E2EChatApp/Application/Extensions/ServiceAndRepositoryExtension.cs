@@ -6,11 +6,10 @@ using E2EChatApp.Infrastructure.Repositories;
 namespace E2EChatApp.Application.Extensions;
 
 public static class ServiceAndRepositoryExtension {
-    public static IServiceCollection AddServicesAndRepositories(this IServiceCollection services) {
+    public static IServiceCollection AddServicesAndRepositories(this IServiceCollection services, IConfiguration configuration) {
         #region Services
         
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<ISecurityService, SecurityService>();
         
         #endregion
         #region Repositories
@@ -20,6 +19,7 @@ public static class ServiceAndRepositoryExtension {
         #endregion
 
         services.AddScoped<IAuthHelper, AuthHelper>();
+        services.AddScoped<ISecurityService, SecurityService>();
         
         return services;
     }

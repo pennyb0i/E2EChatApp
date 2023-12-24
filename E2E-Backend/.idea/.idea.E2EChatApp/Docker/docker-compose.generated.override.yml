@@ -22,13 +22,13 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "e2echatapp:dev"
     ports:
-    - "127.0.0.1:57000:57100"
-    - "127.0.0.1:57200:57300"
+    - "127.0.0.1:57002:57100"
+    - "127.0.0.1:57202:57300"
     volumes:
     - "/Users/penster/.nuget/packages:/root/.nuget/packages"
     - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend/E2EChatApp:/app:rw"
     - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend:/src:rw"
     - "/Users/penster/.local/share/JetBrains/RiderRemoteDebugger/2023.3.2/LinuxArm64:/opt/rider-debugger"
     - "/Users/tp/Applications/Rider.app/Contents/bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "/Users/penster/Library/Logs/JetBrains/Rider2023.3/DebuggerWorker/JetBrains.Debugger.Worker.2023_12_24_01_33_56:/var/opt/rider-debugger:rw"
+    - "/Users/penster/Library/Logs/JetBrains/Rider2023.3/DebuggerWorker/JetBrains.Debugger.Worker.2023_12_24_15_26_38:/var/opt/rider-debugger:rw"
     working_dir: "/app"

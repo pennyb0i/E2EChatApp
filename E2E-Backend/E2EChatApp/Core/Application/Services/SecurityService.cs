@@ -33,12 +33,11 @@ public class SecurityService: ISecurityService
         if (_authenticationHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                Configuration["Jwt:Secret"]));
+                Configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(Configuration["Jwt:Issuer"],
                 Configuration["Jwt:Audience"],
-                null,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(Configuration.GetSection("Jwt").GetValue<int>("ExpirationMinutes")),
                 signingCredentials: credentials
             );
             return new TokenDto
