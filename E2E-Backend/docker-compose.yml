@@ -6,13 +6,16 @@
       dockerfile: E2EChatApp/Dockerfile
 
   db:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: E2EDatabase
     ports:
       - 5432:5432
+    volumes:
+      - ./seeds:/docker-entrypoint-initdb.d
 
   adminer:
     image: adminer

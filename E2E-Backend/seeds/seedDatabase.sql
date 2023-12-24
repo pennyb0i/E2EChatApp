@@ -1,3 +1,6 @@
+\c "E2EDatabase";
+
+
 CREATE TABLE "Users"(
     "ID" SERIAL PRIMARY KEY,
     "Email" varchar(64) NOT NULL,
