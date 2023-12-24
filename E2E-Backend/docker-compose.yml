@@ -4,6 +4,8 @@
     build:
       context: .
       dockerfile: E2EChatApp/Dockerfile
+    ports:
+      - 5000:80
 
   db:
     image: postgres:latest

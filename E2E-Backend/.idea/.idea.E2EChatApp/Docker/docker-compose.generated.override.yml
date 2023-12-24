@@ -5,17 +5,30 @@ services:
       context: "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend"
       dockerfile: "E2EChatApp/Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net7.0/E2EChatApp.dll"
+    - "/opt/rider-debugger/linux-arm64/dotnet/dotnet"
+    - "/opt/rider-debugger/JetBrains.Debugger.Worker.exe"
+    - "--mode=server"
+    - "--frontend-port=57100"
+    - "--backend-port=57300"
+    - "--timeout=60"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
+      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "e2echatapp:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57000:57100"
+    - "127.0.0.1:57200:57300"
     volumes:
     - "/Users/penster/.nuget/packages:/root/.nuget/packages"
     - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend/E2EChatApp:/app:rw"
     - "/Users/penster/Developer/RiderProjects/E2EChatApp/E2E-Backend:/src:rw"
+    - "/Users/penster/.local/share/JetBrains/RiderRemoteDebugger/2023.3.2/LinuxArm64:/opt/rider-debugger"
+    - "/Users/tp/Applications/Rider.app/Contents/bin:/etc/opt/rider-debugger/backend-log.xml"
+    - "/Users/penster/Library/Logs/JetBrains/Rider2023.3/DebuggerWorker/JetBrains.Debugger.Worker.2023_12_24_01_33_56:/var/opt/rider-debugger:rw"
     working_dir: "/app"
