@@ -5,7 +5,7 @@
       context: E2E-Backend/E2EChatApp
       dockerfile: Dockerfile
     ports:
-      - 5000:80
+      - 5001:80
 
   db:
     image: postgres:latest
