@@ -43,8 +43,8 @@ public class UserRepository : IUserRepository{
         using var conn = await _connectionFactory.CreateAsync();
         const string query = 
             """
-                INSERT INTO users ( Email, PasswordHash, PasswordSalt )
-                VALUES ( @Email, @PasswordHash, @PasswordSalt )
+                INSERT INTO users ( Email, PasswordHash, PasswordSalt, Username,PublicKey )
+                VALUES ( @Email, @PasswordHash, @PasswordSalt, @Username, @PublicKey )
                 RETURNING ID;
             """;
         var userId = await conn.QueryFirstOrDefaultAsync<int?>(query, model);

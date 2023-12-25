@@ -51,14 +51,16 @@ public class SecurityService: ISecurityService
         return null;
     }
 
-    public async Task<bool> Create(string loginDtoEmail, string loginDtoPassword)
+    public async Task<bool> Create(string loginDtoEmail, string loginDtoPassword, string loginDtoUsername, string loginDtoPublicKey)
     {
         _authenticationHelper.CreatePasswordHash(loginDtoPassword,
             out var hash, out var salt);
         return await _userRepository.CreateUser(new UserPostBindingModel {
             Email = loginDtoEmail,
             PasswordHash = hash,
-            PasswordSalt = salt
+            PasswordSalt = salt,
+            Username = loginDtoUsername,
+            PublicKey = loginDtoPublicKey
         }) is not null;
     }
 

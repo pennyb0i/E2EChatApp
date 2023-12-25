@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="">
+    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="swagger">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Application/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Application/Controllers/AuthController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Application/Interfaces/ISecurityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Application/Interfaces/ISecurityService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Application/Services/SecurityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Application/Services/SecurityService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/BindingModels/UserPostBindingModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/BindingModels/UserPostBindingModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/Dtos/LoginDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/Dtos/LoginDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Core/Domain/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Infrastructure/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/Infrastructure/Repositories/UserRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/E2EChatApp/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E-Backend/seeds/seedDatabase.sql" beforeDir="false" afterPath="$PROJECT_DIR$/E2E-Backend/seeds/seedDatabase.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,11 +95,24 @@
       <workItem from="1703241372156" duration="145000" />
       <workItem from="1703421297064" duration="31000" />
       <workItem from="1703449459455" duration="86000" />
-      <workItem from="1703462004620" duration="1408000" />
+      <workItem from="1703462004620" duration="3497000" />
     </task>
+    <task id="LOCAL-00001" summary="swagger">
+      <option name="closed" value="true" />
+      <created>1703463609946</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703463609946</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="swagger" />
+    <option name="LAST_COMMIT_MESSAGE" value="swagger" />
   </component>
 </project>

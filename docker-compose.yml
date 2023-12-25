@@ -17,4 +17,4 @@
     ports:
       - 5432:5432
     volumes:
-      - ./seeds:/docker-entrypoint-initdb.d
+      - ./E2E-Backend/seeds:/docker-entrypoint-initdb.d

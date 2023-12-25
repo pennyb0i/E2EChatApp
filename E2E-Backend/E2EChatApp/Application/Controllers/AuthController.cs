@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
         var exists = await _securityService.EmailExists(loginDto.Email);
         if(exists)
             throw new RestException(HttpStatusCode.BadRequest, "Email is already in use!");
-        if (await _securityService.Create(loginDto.Email, loginDto.Password))
+        if (await _securityService.Create(loginDto.Email, loginDto.Password,loginDto.Username,loginDto.PublicKey))
         {
             var token = await _securityService.GenerateJwtToken(loginDto.Email, loginDto.Password);
             if (token is null) {
