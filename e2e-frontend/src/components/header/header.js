@@ -1,5 +1,15 @@
 import './header.css'
+import isAuthenticated from '../../guards/authGuard';
+import {logout} from '../../services/authService'
+import {Navigate, useNavigate} from "react-router-dom";
 const Header = () => {
+    let navigate = useNavigate();
+    const loggedIn = isAuthenticated();
+
+    function handleLogout() {
+        logout();
+
+    }
 
     return (
         <header className="mainHeader">
@@ -15,7 +25,15 @@ const Header = () => {
                         <a href="/chat" className="mainNavLink">Chat</a>
                     </li>
                     <li className="loginButton">
-                        <a href="/login" className="mainNavLink">Login</a>
+                        {loggedIn ? (
+                            <a href="/login" className="mainNavLink" onClick={handleLogout}>
+                                Logout
+                            </a>
+                        ) : (
+                            <a href="/login" className="mainNavLink">
+                                Login
+                            </a>
+                        )}
                     </li>
                 </ul>
             </nav>

@@ -109,6 +109,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction()) {
     app.UseSwaggerUI();
 }
 
+app.UseCors("Pw_WebApi");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
