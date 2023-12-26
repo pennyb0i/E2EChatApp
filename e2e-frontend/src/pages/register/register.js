@@ -1,14 +1,29 @@
 import Header from "../../components/header/header";
 import "./register.css"
 import * as DiffieHellmanService from '../../services/diffieHellmanService';
-
+import React from 'react';
+import {useNavigate} from "react-router-dom";
 import * as EncryptionService from '../../services/encryptionService';
+import {signUp} from '../../services/authService'
+
 
 const Register = () => {
-        // TODO send public key to backend along with user info to complete registration
-        function handleRegister() {
-            const keyPair = DiffieHellmanService.generateECDHKeyPair();
-            localStorage.setItem('privateKey', keyPair.privateKey);
+    let navigate = useNavigate();
+        async function handleRegister (event) {
+            event.preventDefault();
+
+            const username = event.target.elements.username.value;
+            const email = event.target.elements.email.value;
+            const password = event.target.elements.password.value;
+
+            const response = await signUp(email,password,username);
+
+            if(response){
+                if(response.message === "ok"){
+                    navigate('/login');
+                }
+            }
+
         }
 
         return (

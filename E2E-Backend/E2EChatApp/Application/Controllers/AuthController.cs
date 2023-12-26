@@ -36,14 +36,14 @@ public class AuthController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost(nameof(Register))]
-    public async Task<ActionResult<TokenDto>> Register([FromBody] LoginDto loginDto)
+    public async Task<ActionResult<TokenDto>> Register([FromBody] RegisterDto registerDto)
     {
-        var exists = await _securityService.EmailExists(loginDto.Email);
+        var exists = await _securityService.EmailExists(registerDto.Email);
         if(exists)
             throw new RestException(HttpStatusCode.BadRequest, "Email is already in use!");
-        if (await _securityService.Create(loginDto.Email, loginDto.Password,loginDto.Username,loginDto.PublicKey))
+        if (await _securityService.Create(registerDto.Email, registerDto.Password,registerDto.Username,registerDto.PublicKey))
         {
-            var token = await _securityService.GenerateJwtToken(loginDto.Email, loginDto.Password);
+            var token = await _securityService.GenerateJwtToken(registerDto.Email, registerDto.Password);
             if (token is null) {
                 throw new RestException(HttpStatusCode.BadRequest, "Something went wrong during the registration process. Please contact an admin");
             }
