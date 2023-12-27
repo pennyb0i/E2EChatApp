@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using E2EChatApp.Core.Application.Interfaces;
 using E2EChatApp.Core.Domain.BindingModels;
@@ -35,8 +36,16 @@ public class SecurityService: ISecurityService
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 Configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            
+            var claims = new List<Claim>
+            {
+                new Claim("UserEmail", user.Email),
+                new Claim("UserId", user.Id.ToString())
+            };
+            
             var token = new JwtSecurityToken(Configuration["Jwt:Issuer"],
                 Configuration["Jwt:Audience"],
+                claims:claims,
                 expires: DateTime.Now.AddMinutes(Configuration.GetSection("Jwt").GetValue<int>("ExpirationMinutes")),
                 signingCredentials: credentials
             );

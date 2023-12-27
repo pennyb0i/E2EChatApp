@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace E2EChatApp.Application.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class UserController : ControllerBase{
 
     private readonly ILogger<UserController> _logger;
@@ -29,9 +29,11 @@ public class UserController : ControllerBase{
     
     #endregion
     
-    [HttpGet("HelloWorld")]
-    public IActionResult Get()
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        return Ok("Hello world!");
+        var users = await _userService.GetUsers();
+
+        return Ok(users);
     }
 }

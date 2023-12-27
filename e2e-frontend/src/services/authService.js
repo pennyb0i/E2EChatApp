@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as DiffieHellmanService from "./diffieHellmanService";
 
-
 export const signIn = async (email, password) => {
     try {
         const response = await axios.post('http://localhost:5001/api/auth/login', {
@@ -40,4 +39,8 @@ export const signUp = async (email, password, username) => {
 
 export const logout = () => {
     localStorage.removeItem('jwt');
+};
+
+export const getJwt = () => {
+    localStorage.getItem('jwt');
 };
