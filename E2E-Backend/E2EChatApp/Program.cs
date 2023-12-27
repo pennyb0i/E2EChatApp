@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using E2EChatApp.Application.Extensions;
 using E2EChatApp.Core.Domain.Exceptions;
+using E2EChatApp.Core.Domain.Hubs;
 using E2EChatApp.Core.Domain.Responses;
 using E2EChatApp.Infrastructure.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -102,6 +103,8 @@ app.UseExceptionHandler(a => a.Run(async context => {
 
     await context.Response.WriteAsJsonAsync(new ErrorResponse(type, statusCode, trace, exception?.Message ?? ""));
 }));
+
+app.MapHub<ChatHub>("/chatHub");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction()) {

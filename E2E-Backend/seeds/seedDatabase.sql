@@ -8,3 +8,13 @@ CREATE TABLE users (
     PasswordHash bytea NOT NULL,
     PasswordSalt bytea NOT NULL
 )
+
+CREATE TABLE messages (
+    ID SERIAL PRIMARY KEY,
+    SenderId varchar(64) NOT NULL,
+    ReceiverId varchar(64) NOT NULL,
+    Content Text NOT NULL,
+    Timestamp TIMESTAMP,
+    FOREIGN KEY (SenderId) REFERENCES users(ID),
+    FOREIGN KEY (ReceiverId) REFERENCES users(ID)
+);
