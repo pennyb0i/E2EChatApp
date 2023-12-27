@@ -12,8 +12,13 @@ public class MessageService : IMessageService
     {
         _messageRepository = messageRepository;
     }
-    public async Task<List<Message>> GetMessages(string user1Id, string user2Id)
+    public async Task<List<Message>> GetMessages(int firstUserId, int secondUserId)
     {
-        return await _messageRepository.GetMessages(user1Id, user2Id);
+        return await _messageRepository.GetMessages(firstUserId, secondUserId);
+    }
+    
+    public async Task SendMessage(int senderId, int receiverId, string content)
+    {
+        await _messageRepository.SendMessage(senderId, receiverId, content);
     }
 }

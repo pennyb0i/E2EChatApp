@@ -4,5 +4,7 @@ namespace E2EChatApp.Core.Application.Interfaces;
 
 public interface IMessageService
 {
-    public Task<List<Message>> GetMessages(string user1Id, string user2Id);
+    public Task<List<Message>> GetMessages(int firstUserId, int secondUserId);
+
+    Task SendMessage(int senderId, int receiverId, string content);
 }

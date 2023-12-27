@@ -1,15 +1,15 @@
 import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
-import { getUsers} from "../../services/friendsService";
+import { getUsers} from "../../services/userService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         async function fetchUsers() {
-            const fetchedUsers = await getUsers();
-            setUsers(fetchedUsers);
+            //const fetchedUsers = await getUsers();
+            //setUsers(fetchedUsers);
         }
         fetchUsers();
     }, []);

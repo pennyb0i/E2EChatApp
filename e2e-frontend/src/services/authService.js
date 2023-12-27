@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as DiffieHellmanService from "./diffieHellmanService";
-import * as
 
 export const signIn = async (email, password) => {
     try {
@@ -40,4 +39,8 @@ export const signUp = async (email, password, username) => {
 
 export const logout = () => {
     localStorage.removeItem('jwt');
+};
+
+export const getJwt = () => {
+    localStorage.getItem('jwt');
 };

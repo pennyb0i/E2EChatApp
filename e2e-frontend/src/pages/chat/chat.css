@@ -97,3 +97,16 @@ body {
     color: #fff;
     cursor: pointer;
 }
+
+.selected {
+    background-color: #3498db; /* Use any background color you prefer */
+    font-weight: bold; /* Optionally make the text bold or apply other styles */
+    color: #090505; /* Set the text color */
+}
+
+.select-friend-text {
+    margin-top: 20px; /* Adjust as needed for spacing */
+    margin-left: 20px;
+    text-align: center;
+    color: #555; /* Adjust the color as needed */
+}

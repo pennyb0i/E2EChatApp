@@ -21,10 +21,10 @@ public class MessageController : ControllerBase
     }
     
     [Authorize]
-    [HttpGet("{user1Id}/{user2Id}")]
-    public async Task<IActionResult> Get(string user1Id, string user2Id)
+    [HttpGet("{firstUserId}/{secondUserId}")]
+    public async Task<IActionResult> Get(int firstUserId, int secondUserId)
     {
-        var messages = await _messageService.GetMessages(user1Id, user2Id);
+        var messages = await _messageService.GetMessages(firstUserId, secondUserId);
 
         return Ok(messages);
     }
@@ -32,9 +32,8 @@ public class MessageController : ControllerBase
     [HttpPost("send")]
     public async Task<IActionResult> SendMessage([FromBody] MessageDto messageDto)
     {
-        Console.WriteLine("SENDING MESSEAGE with content");
-        Console.WriteLine(messageDto.Content);
-        await _hubContext.Clients.User(messageDto.ReceiverId).SendAsync("ReceiveMessage", messageDto.SenderId, messageDto.Content);
+        await _messageService.SendMessage(messageDto.SenderId, messageDto.ReceiverId, messageDto.Content);
+        await _hubContext.Clients.User(messageDto.ReceiverId.ToString()).SendAsync("ReceiveMessage", messageDto.SenderId, messageDto.Content);
 
         return Ok();
     }

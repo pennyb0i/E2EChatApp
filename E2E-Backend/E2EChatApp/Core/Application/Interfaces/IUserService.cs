@@ -8,4 +8,6 @@ public interface IUserService {
     /// <param name="id"></param>
     /// <returns></returns>
     public Task<User?> GetUserById(int id);
+    Task<List<User>> GetUsers();
+    
 }
