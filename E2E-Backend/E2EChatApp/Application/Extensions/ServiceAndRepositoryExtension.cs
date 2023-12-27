@@ -10,6 +10,7 @@ public static class ServiceAndRepositoryExtension {
         #region Services
         
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IMessageService, MessageService>();
         services.AddScoped<IAuthHelper, AuthHelper>();
         services.AddScoped<ISecurityService, SecurityService>();
         services.AddSignalR();
@@ -17,6 +18,7 @@ public static class ServiceAndRepositoryExtension {
         #region Repositories
         
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
         
         #endregion
         
