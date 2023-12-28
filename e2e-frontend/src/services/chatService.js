@@ -1,4 +1,6 @@
-import { API_BASE_URL } from "../api"
+import {API_BASE_URL} from "../api"
+import {computeSharedSecret, getPrivateKey} from "../services/diffieHellmanService";
+
 export const getMessages = async (firstUserId, secondUserId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/Message/${firstUserId}/${secondUserId}`,{
@@ -43,3 +45,10 @@ export const sendMessage = async (senderId, receiverId, content) => {
         throw error;
     }
 };
+
+export const getSharedSecret = (friend) => {
+    const myPrivateKey = getPrivateKey();
+    const friendPublicKey = friend.publicKey;
+
+    return computeSharedSecret(myPrivateKey, friendPublicKey);
+}

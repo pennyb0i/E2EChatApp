@@ -7,6 +7,10 @@ const initialize = () => {
     }
 };
 
+const getPrivateKey = () => {
+    return localStorage.getItem("privateKey");
+};
+
 const generateECDHKeyPair = () => {
     const ecdh = crypto.createECDH('secp256k1');
     const publicKey = ecdh.generateKeys('hex', 'compressed');
@@ -28,4 +32,4 @@ const computeSharedSecret = (yourPrivateKey, otherPublicKey) => {
 
 initialize();
 
-export {generateECDHKeyPair,computeSharedSecret };
+export {generateECDHKeyPair,computeSharedSecret,getPrivateKey };

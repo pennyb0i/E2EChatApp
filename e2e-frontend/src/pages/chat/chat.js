@@ -2,58 +2,69 @@ import React, {useEffect, useState} from 'react';
 import Header from "../../components/header/header";
 import Message from "../chat/components/message";
 import './chat.css'
+import * as signalR from "@microsoft/signalr";
 
-import { getAllUsers} from "../../services/userService";
+import {getAllUsers, getId} from "../../services/userService";
 
-import {getMessages, sendMessage} from '../../services/chatService';
+import {getMessages, getSharedSecret, sendMessage} from '../../services/chatService';
 
-const friendsList = [
-    {id: 4, name: 'Albert'},
-    {id: 5, name: 'Vlad'},
-]
+import {decryptData, encryptData} from '../../services/encryptionService';
 
-const messageList = [
-    {senderId: 3, receiverId: 4, content: 'Hello Faustas'},
-    {senderId: 5, receiverId: 3, content: 'Hey Tomas!'},
-]
-
-const myId = 8;
-
+const loggedUserId = getId();
 
 const Chat = () => {
     const [friends, setFriends] = useState([]);
-    const [messages, setMessages] = useState(messageList);
+    const [messages, setMessages] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(null);
     const [inputValue, setInputValue] = useState('');
-
     const [loadingChat, setLoadingChat] = useState(false);
     const [loadingFriends, setLoadingFriends] = useState(false);
+
+    const [connection, setConnection] = useState(null);
 
     useEffect(() => {
         loadUsers();
     }, []);
 
+
     function chooseFriend(friend) {
         setSelectedFriend(friend);
-        loadChat(myId, friend);
+        loadChat(loggedUserId, friend);
     }
 
-    async function loadChat(myId,friend) {
+    async function loadChat(myId, friend) {
         try {
+            const secret = getSharedSecret(friend);
             setLoadingChat(true);
-            const result = await getMessages(myId, friend.id);
+            const messagesEncrypted = await getMessages(myId, friend.id);
+
+            const messagesDecrypted = await decryptMessages(messagesEncrypted, secret);
+
             setLoadingChat(false);
-            setMessages(result);
+
+            setMessages(messagesDecrypted);
         } catch (e) {
 
         }
+    }
+
+    async function decryptMessages(messagesEncrypted, secret) {
+        const messages = [...messagesEncrypted];
+
+        return messages.map(message => {
+
+            const decryptedMessage = {...message};
+
+            decryptedMessage.content = decryptData(message.content, secret);
+            return decryptedMessage;
+        });
     }
 
     async function loadUsers() {
         try {
             setLoadingFriends(true);
             const result = await getAllUsers();
-            const filteredFriends = result.filter(user => user.id !== myId);
+            const filteredFriends = result.filter(user => user.id.toString() !== loggedUserId);
             setFriends(filteredFriends);
             setLoadingFriends(false);
         } catch (e) {
@@ -62,14 +73,19 @@ const Chat = () => {
     }
 
     const handleSendMessage = async () => {
-        try{
-            const result = await sendMessage(myId, selectedFriend.id, inputValue);
-            if(result){
+        const secret = getSharedSecret(selectedFriend);
+
+        const encryptedText = encryptData(inputValue, secret);
+
+        try {
+            const result = await sendMessage(loggedUserId, selectedFriend.id, encryptedText);
+            //send message signal
+            if (result) {
                 setInputValue("");
-                loadChat(myId,selectedFriend);
+                loadChat(loggedUserId, selectedFriend);
             }
 
-        }catch (e) {
+        } catch (e) {
             console.error('Error sending message:', e.message);
         }
 
@@ -102,11 +118,12 @@ const Chat = () => {
                     <div className="container-right">
                         <div className="chat-container">
                             {messages.map((message, index) => (
-                                <Message key={index} message={message} userId={myId.toString()} friend={selectedFriend} />
+                                <Message key={index} message={message} userId={loggedUserId.toString()}
+                                         friend={selectedFriend}/>
                             ))}
                         </div>
                         <div className="input-container">
-                            <input type="text" value={inputValue} onChange={handleInputChange} />
+                            <input type="text" value={inputValue} onChange={handleInputChange}/>
                             <button onClick={handleSendMessage}>Send</button>
                         </div>
                     </div>
