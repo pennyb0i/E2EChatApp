@@ -39,7 +39,7 @@ public class SecurityService: ISecurityService
             
             var claims = new List<Claim>
             {
-                new Claim("UserEmail", user.Email),
+                new Claim("Username", user.Username),
                 new Claim("UserId", user.Id.ToString())
             };
             

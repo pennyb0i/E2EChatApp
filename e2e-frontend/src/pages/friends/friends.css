@@ -40,7 +40,7 @@
 
 .button-container {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     gap: 5px;
 }
 
@@ -60,7 +60,7 @@ ul {
     padding: 0;
 }
 
-li {
+.request-list li {
     margin: 5px 0;
     padding: 10px;
     border: 1px solid #ccc;

@@ -43,7 +43,8 @@ builder.Services.AddCors(option =>
             builder
                 .WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 
@@ -85,7 +86,7 @@ builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
         return new DbConnectionFactory(config.GetValue<string>("DefaultConnection")
                                        ?? throw new NullReferenceException("Connection string cannot be null"));
     });
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Error handling
