@@ -1,5 +1,6 @@
 using Dapper;
 using E2EChatApp.Core.Domain.BindingModels;
+using E2EChatApp.Core.Domain.Dtos;
 using E2EChatApp.Core.Domain.Interfaces;
 using E2EChatApp.Core.Domain.Models;
 using E2EChatApp.Infrastructure.Factories;
@@ -14,22 +15,40 @@ public class UserRepository : IUserRepository{
     }
 
     #region SELECT
+    public async Task<List<UserDto>> GetAllUsers(bool? friendsOnly, int currentUserId)
+    {
+        using var conn = await _connectionFactory.CreateAsync();
+        const string query = 
+            """
+                SELECT us.* FROM users us
+                  LEFT JOIN friendships fr ON fr.sender_id = us.id OR fr.receiver_id = us.id
+                  WHERE us.id <> @id
+                    AND ((@friendsOnly IS NULL) 
+                     OR (@friendsOnly = TRUE AND fr.is_pending = FALSE)
+                     OR (@friendsOnly = FALSE AND (fr.is_pending is NULL OR fr.is_pending = TRUE)))
+            """;
+        var users = await conn.QueryAsync<UserDto>(query, new {
+            id = currentUserId,
+            friendsOnly
+        });
+        return users.ToList();
+    }
     
-    public async Task<User?> GetUserById(int id)
+    public async Task<UserModel?> GetUserById(int id)
     {
         using var conn = await _connectionFactory.CreateAsync();
         const string query = "SELECT * FROM users WHERE id = @id";
-        var user = await conn.QueryFirstOrDefaultAsync<User>(query, new {
+        var user = await conn.QueryFirstOrDefaultAsync<UserModel>(query, new {
             id
         });
         return user;
     }
 
-    public async Task<User?> GetUserByEmail(string email)
+    public async Task<UserModel?> GetUserByEmail(string email)
     {
         using var conn = await _connectionFactory.CreateAsync();
         const string query = "SELECT * FROM users WHERE Email = @email";
-        var user = await conn.QueryFirstOrDefaultAsync<User>(query, new {
+        var user = await conn.QueryFirstOrDefaultAsync<UserModel>(query, new {
             email
         });
         return user;

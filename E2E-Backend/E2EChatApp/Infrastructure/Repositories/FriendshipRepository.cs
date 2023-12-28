@@ -16,12 +16,23 @@ public class FriendshipRepository : IFriendshipRepository{
         using var conn = await _connectionFactory.CreateAsync();
         const string query = 
             """
-                SELECT * FROM friendships
+                SELECT * FROM friendships fr
+                    JOIN users Sender ON Sender.id = fr.sender_id
+                    JOIN users Receiver ON Receiver.id = fr.receiver_id
                     WHERE sender_id IN (@senderId, @receiverId)
                       AND receiver_id IN (@senderId, @receiverId)
             """;
-        var friendship = await conn.QueryFirstOrDefaultAsync<FriendshipModel>(query,new {senderId,receiverId});
-        return friendship;
+        var friendship = await conn.QueryAsync<FriendshipModel,UserModel,UserModel,FriendshipModel>(
+            query,
+            (friendship, sender, receiver) =>
+            {
+                friendship.Sender = sender;
+                friendship.Receiver = receiver;
+                return friendship;
+            },
+            new {senderId,receiverId}
+            );
+        return friendship.FirstOrDefault();
     }
 
     public async Task<List<FriendshipModel>> GetFriendshipsByUserId(int userId)
@@ -29,11 +40,22 @@ public class FriendshipRepository : IFriendshipRepository{
         using var conn = await _connectionFactory.CreateAsync();
         const string query = 
             """
-                SELECT * FROM friendships
+                SELECT * FROM friendships fr
+                    JOIN users Sender ON Sender.id = fr.sender_id
+                    JOIN users Receiver ON Receiver.id = fr.receiver_id
                     WHERE sender_id = @userId
                       OR receiver_id = @userId
             """;
-        var friendships = await conn.QueryAsync<FriendshipModel>(query,new {userId});
+        var friendships = await conn.QueryAsync<FriendshipModel,UserModel,UserModel,FriendshipModel>(
+            query,
+            (friendship, sender, receiver) =>
+            {
+                friendship.Sender = sender;
+                friendship.Receiver = receiver;
+                return friendship;
+            },
+            new {userId}
+        );        
         return friendships.ToList();
     }
     
