@@ -1,0 +1,20 @@
+﻿services:
+  e2echatapp:
+    image: e2echatapp
+    build:
+      context: E2EChatApp
+      dockerfile: Dockerfile
+    ports:
+      - 5001:80
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: E2EDatabase
+    ports:
+      - 5432:5432
+    volumes:
+      - ./seeds:/docker-entrypoint-initdb.d

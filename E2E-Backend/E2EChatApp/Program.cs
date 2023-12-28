@@ -76,7 +76,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddServicesAndRepositories(builder.Configuration);
+builder.Services.AddServicesAndRepositories();
 // Set up the DB connection
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     {

@@ -1,5 +1,4 @@
 using E2EChatApp.Core.Application.Interfaces;
-using E2EChatApp.Core.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace E2EChatApp.Application.Controllers;
@@ -7,13 +6,10 @@ namespace E2EChatApp.Application.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase{
-
-    private readonly ILogger<UserController> _logger;
     private readonly IUserService _userService;
 
-    public UserController(ILogger<UserController> logger, IUserService userService)
+    public UserController(IUserService userService)
     {
-        _logger = logger;
         _userService = userService;
     }
 

@@ -7,17 +7,17 @@ CREATE TABLE users (
     Public_Key varchar(256) NOT NULL,
     Password_Hash bytea NOT NULL,
     Password_Salt bytea NOT NULL
-)
+);
 
 CREATE TABLE friendships (
     Sender_Id int NOT NULL 
         CONSTRAINT FK_friendships_Sender REFERENCES users, 
     Receiver_Id int NOT NULL 
         CONSTRAINT FK_friendships_Receiver REFERENCES users,
-    Is_Pending bit not NULL DEFAULT 1,
-    CONSTRAINT PK_friendships PRIMARY KEY,
+    Is_Pending bool not NULL DEFAULT TRUE,
+    CONSTRAINT PK_friendships PRIMARY KEY (Sender_Id,Receiver_Id),
     CONSTRAINT CHK_friendships
-        check (friendships.sender_id <> friendships.receiver_id);
-)
+        check (Sender_Id <> Receiver_Id)
+);
 
 create unique index UX_friendships on friendships(greatest(Sender_Id,Receiver_Id), least(Sender_Id,Receiver_Id));
