@@ -12,16 +12,18 @@ public static class ServiceAndRepositoryExtension {
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IFriendshipService, FriendshipService>();
         
+        services.AddScoped<IMessageService, MessageService>();
+        services.AddScoped<IAuthHelper, AuthHelper>();
+        services.AddScoped<ISecurityService, SecurityService>();
+        services.AddSignalR();
         #endregion
         #region Repositories
         
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IFriendshipRepository, FriendshipRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
         
         #endregion
-
-        services.AddScoped<IAuthHelper, AuthHelper>();
-        services.AddScoped<ISecurityService, SecurityService>();
         
         return services;
     }

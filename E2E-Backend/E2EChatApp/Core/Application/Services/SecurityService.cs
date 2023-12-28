@@ -36,13 +36,16 @@ public class SecurityService: ISecurityService
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 Configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            
+            var claims = new List<Claim>
+            {
+                new Claim("Username", user.Username),
+                new Claim("UserId", user.Id.ToString())
+            };
+            
             var token = new JwtSecurityToken(Configuration["Jwt:Issuer"],
                 Configuration["Jwt:Audience"],
-                claims: new List<Claim> {
-                    new(ClaimTypes.Email, user.Email),
-                    new("PublicKey", user.PublicKey),
-                    new("UserId",user.Id.ToString())
-                },
+                claims:claims,
                 expires: DateTime.Now.AddMinutes(Configuration.GetSection("Jwt").GetValue<int>("ExpirationMinutes")),
                 signingCredentials: credentials
             );

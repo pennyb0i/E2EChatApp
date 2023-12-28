@@ -21,4 +21,9 @@ public class UserService : IUserService{
     {
         return await _userRepository.GetUserById(id);
     }
+
+    public async Task<List<User>> GetUsers()
+    {
+        return await _userRepository.GetUsers();
+    }
 }

@@ -66,6 +66,16 @@ public class UserRepository : IUserRepository{
         return user;
     }
     
+    public async Task<List<User>> GetUsers()
+    {
+        using var conn = await _connectionFactory.CreateAsync();
+    
+        const string query = "SELECT *FROM users";
+
+        var users = await conn.QueryAsync<User>(query);
+        return users.ToList();
+    }
+    
     #endregion
 
     #region INSERT
@@ -81,6 +91,6 @@ public class UserRepository : IUserRepository{
         var userId = await conn.QueryFirstOrDefaultAsync<int?>(query, model);
         return userId;
     }
-    
+
     #endregion
 }

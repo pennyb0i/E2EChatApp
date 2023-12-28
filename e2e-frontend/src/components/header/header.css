@@ -24,6 +24,22 @@ nav li {
 .mainNavLink:hover {
     text-decoration: underline;
 }
+
 .loginButton {
-    margin-left: auto; /* Pushes the "Login" button to the right */
+    margin-left: auto;
+}
+
+.LoggedInText {
+    display: flex;
+    align-items: center;
+}
+
+.loggedInText {
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: 30px;
+}
+
+.usernameText {
+    color: #ffcc00;
 }

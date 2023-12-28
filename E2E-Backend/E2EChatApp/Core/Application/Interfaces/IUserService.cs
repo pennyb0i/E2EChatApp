@@ -18,4 +18,6 @@ public interface IUserService {
     /// <param name="id"></param>
     /// <returns></returns>
     public Task<UserModel?> GetUserById(int id);
+    Task<List<UserModel>> GetUsers();
+    
 }

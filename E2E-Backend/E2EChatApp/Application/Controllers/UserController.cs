@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace E2EChatApp.Application.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class UserController : ControllerBase{
     private readonly IUserService _userService;
 
@@ -42,4 +42,12 @@ public class UserController : ControllerBase{
     }
     
     #endregion
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var users = await _userService.GetUsers();
+
+        return Ok(users);
+    }
 }

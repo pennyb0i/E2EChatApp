@@ -21,3 +21,18 @@ CREATE TABLE friendships (
 );
 
 create unique index UX_friendships on friendships(greatest(Sender_Id,Receiver_Id), least(Sender_Id,Receiver_Id));
+
+    PublicKey varchar(256) NOT NULL,
+    PasswordHash bytea NOT NULL,
+    PasswordSalt bytea NOT NULL
+);
+
+CREATE TABLE messages (
+    ID SERIAL PRIMARY KEY,
+    Sender_Id integer NOT NULL,
+    Receiver_Id integer NOT NULL,
+    Content Text NOT NULL,
+    Timestamp TIMESTAMP NOT NULL,
+    FOREIGN KEY (Sender_Id) REFERENCES users(ID),
+    FOREIGN KEY (Receiver_Id) REFERENCES users(ID)
+);
