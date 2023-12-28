@@ -78,7 +78,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddServicesAndRepositories(builder.Configuration);
+builder.Services.AddServicesAndRepositories();
 // Set up the DB connection
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     {
@@ -86,6 +86,7 @@ builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
         return new DbConnectionFactory(config.GetValue<string>("DefaultConnection")
                                        ?? throw new NullReferenceException("Connection string cannot be null"));
     });
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
 

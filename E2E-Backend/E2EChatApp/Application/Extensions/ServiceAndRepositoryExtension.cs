@@ -6,10 +6,12 @@ using E2EChatApp.Infrastructure.Repositories;
 namespace E2EChatApp.Application.Extensions;
 
 public static class ServiceAndRepositoryExtension {
-    public static IServiceCollection AddServicesAndRepositories(this IServiceCollection services, IConfiguration configuration) {
+    public static IServiceCollection AddServicesAndRepositories(this IServiceCollection services) {
         #region Services
         
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IFriendshipService, FriendshipService>();
+        
         services.AddScoped<IMessageService, MessageService>();
         services.AddScoped<IAuthHelper, AuthHelper>();
         services.AddScoped<ISecurityService, SecurityService>();
@@ -18,6 +20,7 @@ public static class ServiceAndRepositoryExtension {
         #region Repositories
         
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IFriendshipRepository, FriendshipRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
         
         #endregion
