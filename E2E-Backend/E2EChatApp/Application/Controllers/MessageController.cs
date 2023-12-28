@@ -1,5 +1,7 @@
-﻿using E2EChatApp.Core.Application.Interfaces;
-using E2EChatApp.Core.Domain.Dtos;
+﻿using System.Net;
+using E2EChatApp.Core.Application.Interfaces;
+using E2EChatApp.Core.Domain.BindingModels;
+using E2EChatApp.Core.Domain.Exceptions;
 using E2EChatApp.Core.Domain.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +23,28 @@ public class MessageController : ControllerBase
     }
     
     [Authorize]
-    [HttpGet("{firstUserId}/{secondUserId}")]
-    public async Task<IActionResult> Get(int firstUserId, int secondUserId)
+    [HttpGet("{secondUserId}")]
+    public async Task<IActionResult> Get(int secondUserId)
     {
-        var messages = await _messageService.GetMessages(firstUserId, secondUserId);
+        var userIdClaim = User.FindFirst("UserId");
+        if (userIdClaim is null) {
+            throw new RestException(HttpStatusCode.NotFound, "Current user Id not found");
+        }
+        var messages = await _messageService.GetMessages(int.Parse(userIdClaim.Value), secondUserId);
 
         return Ok(messages);
     }
     
     [HttpPost("send")]
-    public async Task<IActionResult> SendMessage([FromBody] MessageDto messageDto)
+    public async Task<IActionResult> SendMessage([FromBody] MessagePostBindingModel messageDto)
     {
-        await _messageService.SendMessage(messageDto.SenderId, messageDto.ReceiverId, messageDto.Content);
-        await _hubContext.Clients.User(messageDto.ReceiverId.ToString()).SendAsync("ReceiveMessage", messageDto.SenderId, messageDto.Content);
+        var userIdClaim = User.FindFirst("UserId");
+        if (userIdClaim is null) {
+            throw new RestException(HttpStatusCode.NotFound, "Current user Id not found");
+        }
+        var senderId = int.Parse(userIdClaim.Value);
+        await _messageService.SendMessage(senderId, messageDto.RecipientId, messageDto.Content);
+        await _hubContext.Clients.User(messageDto.RecipientId.ToString()).SendAsync("ReceiveMessage", senderId, messageDto.Content);
 
         return Ok();
     }
