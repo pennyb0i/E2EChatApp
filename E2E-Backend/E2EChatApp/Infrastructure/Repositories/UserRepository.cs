@@ -1,6 +1,7 @@
 using Dapper;
 using E2EChatApp.Core.Domain.BindingModels;
 using E2EChatApp.Core.Domain.Dtos;
+using E2EChatApp.Core.Domain.Enums;
 using E2EChatApp.Core.Domain.Interfaces;
 using E2EChatApp.Core.Domain.Models;
 using E2EChatApp.Infrastructure.Factories;
@@ -20,7 +21,14 @@ public class UserRepository : IUserRepository{
         using var conn = await _connectionFactory.CreateAsync();
         const string query = 
             """
-                SELECT us.* FROM users us
+                SELECT us.*, 
+                    (CASE 
+                        WHEN fr.is_pending = TRUE AND fr.sender_id = @id THEN @pendingSent
+                        WHEN fr.is_pending = TRUE AND fr.receiver_id = @id THEN @pendingReceiving
+                        WHEN fr.is_pending = FALSE THEN @friend
+                        ELSE @notFriend
+                    END) AS friendship_status
+                FROM users us
                   LEFT JOIN friendships fr ON fr.sender_id = us.id OR fr.receiver_id = us.id
                   WHERE us.id <> @id
                     AND ((@friendsOnly IS NULL) 
@@ -29,7 +37,11 @@ public class UserRepository : IUserRepository{
             """;
         var users = await conn.QueryAsync<UserDto>(query, new {
             id = currentUserId,
-            friendsOnly
+            friendsOnly,
+            FriendshipStatus.NotFriend,
+            FriendshipStatus.PendingSent,
+            FriendshipStatus.PendingReceiving,
+            FriendshipStatus.Friend
         });
         return users.ToList();
     }

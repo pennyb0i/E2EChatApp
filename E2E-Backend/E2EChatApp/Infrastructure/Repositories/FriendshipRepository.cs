@@ -1,4 +1,5 @@
 using Dapper;
+using E2EChatApp.Core.Domain.Dtos;
 using E2EChatApp.Core.Domain.Interfaces;
 using E2EChatApp.Core.Domain.Models;
 using E2EChatApp.Infrastructure.Factories;
@@ -22,7 +23,7 @@ public class FriendshipRepository : IFriendshipRepository{
                     WHERE sender_id IN (@senderId, @receiverId)
                       AND receiver_id IN (@senderId, @receiverId)
             """;
-        var friendship = await conn.QueryAsync<FriendshipModel,UserModel,UserModel,FriendshipModel>(
+        var friendship = await conn.QueryAsync<FriendshipModel,UserDto,UserDto,FriendshipModel>(
             query,
             (friendship, sender, receiver) =>
             {
@@ -46,7 +47,7 @@ public class FriendshipRepository : IFriendshipRepository{
                     WHERE sender_id = @userId
                       OR receiver_id = @userId
             """;
-        var friendships = await conn.QueryAsync<FriendshipModel,UserModel,UserModel,FriendshipModel>(
+        var friendships = await conn.QueryAsync<FriendshipModel,UserDto,UserDto,FriendshipModel>(
             query,
             (friendship, sender, receiver) =>
             {
