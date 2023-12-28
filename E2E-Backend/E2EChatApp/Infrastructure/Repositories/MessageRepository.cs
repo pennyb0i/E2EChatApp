@@ -18,12 +18,14 @@ namespace E2EChatApp.Infrastructure.Repositories
         {
             using var conn = await _connectionFactory.CreateAsync();
     
-            const string query = @"
-        SELECT *
-        FROM messages
-        WHERE (SenderId = @user1Id AND ReceiverId = @user2Id)
-           OR (SenderId = @user2Id AND ReceiverId = @user1Id)
-        ORDER BY Timestamp ASC";
+            const string query = 
+                """
+                    SELECT *
+                     FROM messages
+                    WHERE (sender_id = @user1Id AND receiver_id = @user2Id)
+                       OR (sender_id = @user2Id AND receiver_id = @user1Id)
+                    ORDER BY Timestamp
+                """;
 
             var messages = await conn.QueryAsync<Message>(query, new { user1Id, user2Id });
             return messages.ToList();
@@ -33,9 +35,11 @@ namespace E2EChatApp.Infrastructure.Repositories
         {
             using var conn = await _connectionFactory.CreateAsync();
 
-            const string query = @"
-                INSERT INTO messages (SenderId, ReceiverId, Content, Timestamp)
-                VALUES (@senderId, @receiverId, @content, NOW())";
+            const string query = 
+                """                 
+                    INSERT INTO messages (sender_id, receiver_id, Content, Timestamp)
+                    VALUES (@senderId, @receiverId, @content, NOW())
+                """;
 
             await conn.ExecuteAsync(query, new { senderId, receiverId, content });
         }

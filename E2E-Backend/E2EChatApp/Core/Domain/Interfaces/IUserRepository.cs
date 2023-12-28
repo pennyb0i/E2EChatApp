@@ -33,5 +33,5 @@ public interface IUserRepository {
     /// <param name="model"></param>
     /// <returns></returns>
     public Task<int?> CreateUser(UserPostBindingModel model);
-    Task<List<User>> GetUsers();
+    Task<List<UserModel>> GetUsers();
 }

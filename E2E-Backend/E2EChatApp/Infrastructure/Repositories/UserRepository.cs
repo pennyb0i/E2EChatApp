@@ -66,13 +66,13 @@ public class UserRepository : IUserRepository{
         return user;
     }
     
-    public async Task<List<User>> GetUsers()
+    public async Task<List<UserModel>> GetUsers()
     {
         using var conn = await _connectionFactory.CreateAsync();
     
-        const string query = "SELECT *FROM users";
+        const string query = "SELECT * FROM users";
 
-        var users = await conn.QueryAsync<User>(query);
+        var users = await conn.QueryAsync<UserModel>(query);
         return users.ToList();
     }
     

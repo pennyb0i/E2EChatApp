@@ -22,11 +22,6 @@ CREATE TABLE friendships (
 
 create unique index UX_friendships on friendships(greatest(Sender_Id,Receiver_Id), least(Sender_Id,Receiver_Id));
 
-    PublicKey varchar(256) NOT NULL,
-    PasswordHash bytea NOT NULL,
-    PasswordSalt bytea NOT NULL
-);
-
 CREATE TABLE messages (
     ID SERIAL PRIMARY KEY,
     Sender_Id integer NOT NULL,

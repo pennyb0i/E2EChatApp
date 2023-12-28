@@ -43,11 +43,11 @@ public class UserController : ControllerBase{
     
     #endregion
     
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var users = await _userService.GetUsers();
-
-        return Ok(users);
-    }
+//     [HttpGet]
+//     public async Task<IActionResult> GetAll()
+//     {
+//         var users = await _userService.GetUsers();
+//
+//         return Ok(users);
+//     }
 }
