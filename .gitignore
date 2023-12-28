@@ -477,3 +477,4 @@ fabric.properties
 
 .DS_Store
 .idea
+E2E-Backend/docker-compose.yml
