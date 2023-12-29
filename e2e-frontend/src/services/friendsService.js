@@ -25,11 +25,30 @@ export const getAllFriendRequests = async () => {
         }
 
         const result = await response.json();
-        if (result.some(request => request.senderId == getId())) {
-            return [];
-        } else {
-            return result
+
+        const userRequests = result.filter(request =>
+            request.senderId == getId() || request.isPending === true
+        );
+        return userRequests;
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+export const getOnlineFriends = async () => {
+    try {
+        const response = await fetch(`${apiConfig.baseURL}/Friendship`, {
+            headers: apiConfig.getHeaders(),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+        const result = await response.json();
+        return result
     } catch (error) {
         throw error;
     }

@@ -32,10 +32,13 @@ const Friends = () => {
         )
         : users;
 
-    const sendFriendRequest = async (userId) => {
+    const sendFriendRequest = async (userId, setRequests, requests) => {
         try {
             await createFriendship(userId);
             console.log("Selected userID: " + userId);
+
+            const updatedRequests = requests.filter(request => request.sender.id !== userId);
+            setRequests(updatedRequests);
         } catch (error) {
             console.error("Failed to send friend request:", error);
         }
@@ -88,7 +91,7 @@ const Friends = () => {
                             <li key={index}>
                                 {request.sender.email}
                                 <div className="button-container">
-                                    <button onClick={() => sendFriendRequest()}>
+                                    <button onClick={() => sendFriendRequest(request.sender.id, setRequests, requests)}>
                                         Accept
                                     </button>
                                     <button onClick={() => sendFriendRequest()}>
