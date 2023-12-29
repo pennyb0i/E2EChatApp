@@ -1,12 +1,13 @@
-import {apiC} from "../api";
 import axios from "axios";
 import {apiConfig} from "../apiConfig";
+import {getId} from "./userService";
 
 export const createFriendship = async (id) => {
     try {
-        const respons = await axios.post(`${apiConfig.baseURL}/Friendship`,{
-            id
+        const respons = await axios.post(`${apiConfig.baseURL}/Friendship/${id}`,{},{
+            headers: apiConfig.getHeaders(),
         });
+        console.log("Data: "+ respons.data)
          return respons.data
     }catch (e) {
         console.error('Send the friend request is failed', e)
@@ -24,7 +25,11 @@ export const getAllFriendRequests = async () => {
         }
 
         const result = await response.json();
-        return result;
+        if (result.some(request => request.senderId == getId())) {
+            return [];
+        } else {
+            return result
+        }
     } catch (error) {
         throw error;
     }

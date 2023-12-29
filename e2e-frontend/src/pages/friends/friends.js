@@ -27,14 +27,18 @@ const Friends = () => {
 
     const filteredUsers = searchValue
         ? users.filter((user) =>
-            typeof user.name === 'string' &&
-            user.name.toLowerCase().includes(searchValue.trim().toLowerCase())
+            typeof user.email === 'string' &&
+            user.email.toLowerCase().includes(searchValue.trim().toLowerCase())
         )
         : users;
 
-    const sendFriendRequest = (userId) => {
-        //createFriendship(userId)
-        console.log("Selected userID: "+ userId)
+    const sendFriendRequest = async (userId) => {
+        try {
+            await createFriendship(userId);
+            console.log("Selected userID: " + userId);
+        } catch (error) {
+            console.error("Failed to send friend request:", error);
+        }
     };
 
     return (
