@@ -4,7 +4,11 @@ import { jwtDecode } from "jwt-decode";
 
 export const getAllUsers = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/User`);
+        const response = await fetch(`${API_BASE_URL}/User`, {
+            headers: {
+                Authorization: `Bearer ${getJwtToken()}`,
+            },
+        });
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

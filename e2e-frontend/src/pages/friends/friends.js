@@ -2,9 +2,12 @@ import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
 import {getAllUsers} from "../../services/userService";
+import {createFriendship, getAllFriendRequests} from "../../services/friendsService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         async function fetchUsers() {
@@ -14,13 +17,13 @@ const Friends = () => {
         fetchUsers();
     }, []);
 
-    const [requests, setRequests] = useState([
-        'Request 1',
-        'Request 2',
-        'Request 3',
-    ]);
-
-    const [searchValue, setSearchValue] = useState('');
+    useEffect(() => {
+        async function fetchRequests() {
+            const fetchedRequests = await getAllFriendRequests();
+            setRequests(fetchedRequests);
+        }
+        fetchRequests();
+    }, []);
 
     const filteredUsers = searchValue
         ? users.filter((user) =>
@@ -29,11 +32,9 @@ const Friends = () => {
         )
         : users;
 
-    const addFriend = () => {
-        if (searchValue.trim() !== '') {
-            setUsers([...users, searchValue]);
-            setSearchValue('');
-        }
+    const sendFriendRequest = (userId) => {
+        //createFriendship(userId)
+        console.log("Selected userID: "+ userId)
     };
 
     return (
@@ -61,8 +62,8 @@ const Friends = () => {
                             <ul className="friends-list">
                                 {filteredUsers.map((user, index) => (
                                     <li key={index}>
-                                        <span>{user.username}</span>
-                                        <button onClick={() => addFriend(user)}>
+                                        <span>{user.email}</span>
+                                        <button onClick={() => sendFriendRequest(user.id)}>
                                             Add Friend
                                         </button>
                                     </li>
@@ -81,19 +82,18 @@ const Friends = () => {
                     <ul className="request-list">
                         {requests.map((request, index) => (
                             <li key={index}>
-                                {request}
+                                {request.sender.email}
                                 <div className="button-container">
-                                    <button onClick={() => addFriend(request)}>
+                                    <button onClick={() => sendFriendRequest()}>
                                         Accept
                                     </button>
-                                    <button onClick={() => addFriend(request)}>
+                                    <button onClick={() => sendFriendRequest()}>
                                         Decline
                                     </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
-
                 </div>
             </div>
         </>
