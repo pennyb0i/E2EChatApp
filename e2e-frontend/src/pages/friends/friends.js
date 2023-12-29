@@ -1,15 +1,15 @@
 import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
-import { getUsers} from "../../services/userService";
+import {getAllUsers} from "../../services/userService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         async function fetchUsers() {
-            //const fetchedUsers = await getUsers();
-            //setUsers(fetchedUsers);
+            const fetchedUsers = await getAllUsers();
+            setUsers(fetchedUsers);
         }
         fetchUsers();
     }, []);
@@ -61,7 +61,7 @@ const Friends = () => {
                             <ul className="friends-list">
                                 {filteredUsers.map((user, index) => (
                                     <li key={index}>
-                                        <span>{user.name}</span>
+                                        <span>{user.username}</span>
                                         <button onClick={() => addFriend(user)}>
                                             Add Friend
                                         </button>

@@ -1,4 +1,3 @@
-import {apiConfig} from "../apiConfig";
 import {API_BASE_URL} from "../api";
 
 import { jwtDecode } from "jwt-decode";

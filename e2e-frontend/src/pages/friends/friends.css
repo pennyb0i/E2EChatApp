@@ -6,7 +6,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    border: 3px solid black;
 }
 .black-bordered-window {
     width: 80%;
@@ -26,6 +25,12 @@
     margin-bottom: 8px;
 }
 
+.friends-list li {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
 .request-list {
     list-style: none;
     padding: 0;
@@ -36,6 +41,16 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
+}
+
+.request-list li {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+li:hover {
+    background-color: #0084FF;
 }
 
 .button-container {
@@ -58,14 +73,4 @@ button {
 ul {
     list-style-type: none;
     padding: 0;
-}
-
-.request-list li {
-    margin: 5px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-
-li:hover {
-    background-color: #0084FF;
 }
