@@ -26,9 +26,10 @@ export const getAllFriendRequests = async () => {
         const result = await response.json();
 
         const userRequests = result.filter(request =>
-            request.senderId == getId() || request.isPending == true
+            request.isPending ||
+            (request.senderId != getId() && request.receiverId != getId())
         );
-        console.log("ID: "+ getId())
+
         return userRequests;
 
     } catch (error) {
