@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <Folder Include="Core\Application\" />
+      <Folder Include="Core\Configuration\" />
     </ItemGroup>
 
 </Project>
