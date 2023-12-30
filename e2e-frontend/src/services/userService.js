@@ -21,6 +21,25 @@ export const getAllUsers = async () => {
     }
 };
 
+export const getAllFriends = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/User?friendsOnly=true`, {
+            headers: {
+                Authorization: `Bearer ${getJwtToken()}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const getJwtToken = () => {
     return localStorage.getItem("jwt");
 }
