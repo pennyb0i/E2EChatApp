@@ -1,13 +1,13 @@
 import axios from "axios";
 import {apiConfig} from "../apiConfig";
 import {getId} from "./userService";
+import {API_BASE_URL} from "../api";
 
 export const createFriendship = async (id) => {
     try {
         const respons = await axios.post(`${apiConfig.baseURL}/Friendship/${id}`,{},{
             headers: apiConfig.getHeaders(),
         });
-        console.log("Data: "+ respons.data)
          return respons.data
     }catch (e) {
         console.error('Send the friend request is failed', e)
@@ -27,7 +27,7 @@ export const getAllFriendRequests = async () => {
         const result = await response.json();
 
         const userRequests = result.filter(request =>
-            request.senderId == getId() || request.isPending === true
+            request.senderId !== getId() || request.isPending == true
         );
         return userRequests;
 
@@ -37,9 +37,9 @@ export const getAllFriendRequests = async () => {
 }
 
 
-export const getOnlineFriends = async () => {
+export const getAllNotFriends = async () => {
     try {
-        const response = await fetch(`${apiConfig.baseURL}/Friendship`, {
+        const response = await fetch(`${apiConfig.baseURL}/api/User?friendsOnly=false`, {
             headers: apiConfig.getHeaders(),
         });
 
@@ -48,7 +48,7 @@ export const getOnlineFriends = async () => {
         }
 
         const result = await response.json();
-        return result
+        return result;
     } catch (error) {
         throw error;
     }

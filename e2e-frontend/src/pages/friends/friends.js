@@ -1,8 +1,7 @@
 import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
-import {getAllUsers} from "../../services/userService";
-import {createFriendship, getAllFriendRequests} from "../../services/friendsService";
+import {createFriendship, getAllFriendRequests, getAllNotFriends} from "../../services/friendsService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
@@ -11,7 +10,7 @@ const Friends = () => {
 
     useEffect(() => {
         async function fetchUsers() {
-            const fetchedUsers = await getAllUsers();
+            const fetchedUsers = await getAllNotFriends();
             setUsers(fetchedUsers);
         }
         fetchUsers();
@@ -37,8 +36,6 @@ const Friends = () => {
             await createFriendship(userId);
             console.log("Selected userID: " + userId);
 
-            const updatedRequests = requests.filter(request => request.sender.id !== userId);
-            setRequests(updatedRequests);
         } catch (error) {
             console.error("Failed to send friend request:", error);
         }
