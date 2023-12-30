@@ -144,11 +144,4 @@ public class FriendshipServiceTest {
         });
         _friendshipRepositoryMock.Verify(repo => repo.CancelFriendship(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
-    // Additional TestCases can be added to cover all possible scenarios and edge cases
-
-    [Fact]
-    public void a()
-    {
-        
-    }
 }
