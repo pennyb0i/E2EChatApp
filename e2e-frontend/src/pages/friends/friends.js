@@ -1,38 +1,59 @@
 import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
-import { getUsers} from "../../services/userService";
+import {
+    cancelFriendship,
+    createFriendship,
+    getAllFriendRequests,
+    getAllNotFriends
+} from "../../services/friendsService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         async function fetchUsers() {
-            //const fetchedUsers = await getUsers();
-            //setUsers(fetchedUsers);
+            const fetchedUsers = await getAllNotFriends();
+            setUsers(fetchedUsers);
         }
         fetchUsers();
     }, []);
 
-    const [requests, setRequests] = useState([
-        'Request 1',
-        'Request 2',
-        'Request 3',
-    ]);
-
-    const [searchValue, setSearchValue] = useState('');
+    useEffect(() => {
+        async function fetchRequests() {
+            const fetchedRequests = await getAllFriendRequests();
+            setRequests(fetchedRequests);
+        }
+        fetchRequests();
+    }, []);
 
     const filteredUsers = searchValue
         ? users.filter((user) =>
-            typeof user.name === 'string' &&
-            user.name.toLowerCase().includes(searchValue.trim().toLowerCase())
+            typeof user.email === 'string' &&
+            user.email.toLowerCase().includes(searchValue.trim().toLowerCase())
         )
         : users;
 
-    const addFriend = () => {
-        if (searchValue.trim() !== '') {
-            setUsers([...users, searchValue]);
-            setSearchValue('');
+    const sendFriendRequest = async (userId) => {
+        try {
+            await createFriendship(userId);
+            console.log("Selected userID: " + userId);
+
+        } catch (error) {
+            console.error("Failed to send friend request:", error);
+        }
+    };
+
+    const cancelFriendRequest = async (userId) => {
+        try {
+            await cancelFriendship(userId);
+            console.log("Selected userID: " + userId);
+            console.log("cancel")
+
+        } catch (error) {
+            console.error("Failed to send friend request:", error);
         }
     };
 
@@ -61,8 +82,8 @@ const Friends = () => {
                             <ul className="friends-list">
                                 {filteredUsers.map((user, index) => (
                                     <li key={index}>
-                                        <span>{user.name}</span>
-                                        <button onClick={() => addFriend(user)}>
+                                        <span>{user.email}</span>
+                                        <button onClick={() => sendFriendRequest(user.id)}>
                                             Add Friend
                                         </button>
                                     </li>
@@ -81,19 +102,18 @@ const Friends = () => {
                     <ul className="request-list">
                         {requests.map((request, index) => (
                             <li key={index}>
-                                {request}
+                                {request.sender.email}
                                 <div className="button-container">
-                                    <button onClick={() => addFriend(request)}>
+                                    <button onClick={() => sendFriendRequest(request.sender.id)}>
                                         Accept
                                     </button>
-                                    <button onClick={() => addFriend(request)}>
+                                    <button onClick={() => cancelFriendRequest(request.sender.id)}>
                                         Decline
                                     </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
-
                 </div>
             </div>
         </>
