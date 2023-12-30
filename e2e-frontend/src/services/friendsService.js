@@ -1,7 +1,6 @@
 import axios from "axios";
 import {apiConfig} from "../apiConfig";
 import {getId} from "./userService";
-import {API_BASE_URL} from "../api";
 
 export const createFriendship = async (id) => {
     try {
@@ -27,8 +26,9 @@ export const getAllFriendRequests = async () => {
         const result = await response.json();
 
         const userRequests = result.filter(request =>
-            request.senderId !== getId() || request.isPending == true
+            request.senderId == getId() || request.isPending == true
         );
+        console.log("ID: "+ getId())
         return userRequests;
 
     } catch (error) {
@@ -51,5 +51,16 @@ export const getAllNotFriends = async () => {
         return result;
     } catch (error) {
         throw error;
+    }
+}
+
+export const cancelFriendship = async (id) => {
+    try {
+        const response = await axios.delete(`${apiConfig.baseURL}/Friendship/${id}`,{
+            headers: apiConfig.getHeaders(),
+        });
+        return response.data
+    }catch (e) {
+        console.error('Cancel the friend request is failed', e)
     }
 }

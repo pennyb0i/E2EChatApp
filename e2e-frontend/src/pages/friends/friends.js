@@ -1,7 +1,12 @@
 import Header from "../../components/header/header";
 import React, {useEffect, useState} from 'react';
 import './friends.css';
-import {createFriendship, getAllFriendRequests, getAllNotFriends} from "../../services/friendsService";
+import {
+    cancelFriendship,
+    createFriendship,
+    getAllFriendRequests,
+    getAllNotFriends
+} from "../../services/friendsService";
 
 const Friends = () => {
     const [users, setUsers] = useState([]);
@@ -31,10 +36,21 @@ const Friends = () => {
         )
         : users;
 
-    const sendFriendRequest = async (userId, setRequests, requests) => {
+    const sendFriendRequest = async (userId) => {
         try {
             await createFriendship(userId);
             console.log("Selected userID: " + userId);
+
+        } catch (error) {
+            console.error("Failed to send friend request:", error);
+        }
+    };
+
+    const cancelFriendRequest = async (userId) => {
+        try {
+            await cancelFriendship(userId);
+            console.log("Selected userID: " + userId);
+            console.log("cancel")
 
         } catch (error) {
             console.error("Failed to send friend request:", error);
@@ -88,10 +104,10 @@ const Friends = () => {
                             <li key={index}>
                                 {request.sender.email}
                                 <div className="button-container">
-                                    <button onClick={() => sendFriendRequest(request.sender.id, setRequests, requests)}>
+                                    <button onClick={() => sendFriendRequest(request.sender.id)}>
                                         Accept
                                     </button>
-                                    <button onClick={() => sendFriendRequest()}>
+                                    <button onClick={() => cancelFriendRequest(request.sender.id)}>
                                         Decline
                                     </button>
                                 </div>
