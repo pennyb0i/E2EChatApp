@@ -11,27 +11,45 @@ namespace E2EEChatApp.UnitTests.Core.Application.Services;
 [TestSubject(typeof(FriendshipService))]
 public class FriendshipServiceTest {
     private readonly Mock<IFriendshipRepository> _friendshipRepositoryMock = new();
+    private readonly Mock<IUserRepository> _userRepositoryMock = new();
     private readonly IFriendshipService _friendshipService;
     
-    public FriendshipServiceTest() // dependency injection via test suite's constructor  
+    public FriendshipServiceTest()
     {
-        _friendshipService = new FriendshipService(_friendshipRepositoryMock.Object);
+        _friendshipService = new FriendshipService(_friendshipRepositoryMock.Object, _userRepositoryMock.Object);
     }
     
-    // TestCases for GetAllFriendshipsByUserId method
+    #region GetAllFriendshipsByUserId method
+    
     [Fact]
-    public async Task GetAllFriendshipsByUserId_ValidInput_CallsRepository()
+    public async Task GetAllFriendshipsByUserId_UserEists_CallsRepository()
     {
-        var userId = 1;
+        const int currentUserId = 1;
+
+        _userRepositoryMock.Setup(repo => 
+            repo.GetUserById(currentUserId)).ReturnsAsync(new UserModel{Id = currentUserId});
         _friendshipRepositoryMock.Setup(repo =>
             repo.GetFriendshipsByUserId(It.IsAny<int>())).ReturnsAsync(new List<FriendshipModel>());
 
-        await _friendshipService.GetAllFriendshipsByUserId(userId);
+        await _friendshipService.GetAllFriendshipsByUserId(currentUserId);
 
-        _friendshipRepositoryMock.Verify(repo => repo.GetFriendshipsByUserId(userId), Times.Once);
+        _friendshipRepositoryMock.Verify(repo => repo.GetFriendshipsByUserId(currentUserId), Times.Once);
     }
+    [Fact]
+    public async Task GetAllFriendshipsByUserId_UserDoesNotExist_ThrowsException()
+    {
+        const int currentUserId = 1;
+        _userRepositoryMock.Setup(repo => repo.GetUserById(currentUserId)).ReturnsAsync((UserModel?)null);
+        await Assert.ThrowsAsync<RestException>(async () =>
+        {
+            await _friendshipService.GetAllFriendshipsByUserId(currentUserId);
+        });
+        _friendshipRepositoryMock.Verify(repo => repo.GetFriendshipsByUserId(It.IsAny<int>()), Times.Never);
+    }
+    
+    #endregion
 
-    #region TestCases for CreateFriendship method
+    #region CreateFriendship method
     
     [Fact]
     public async Task CreateFriendship_NoFriendship_CreatesFriendship()
@@ -110,7 +128,8 @@ public class FriendshipServiceTest {
     
     #endregion 
     
-    // TestCases for CancelFriendship method
+    #region CancelFriendship method
+    
     [Fact]
     public async Task CancelFriendship_ValidInput_CallsRepository()
     {
@@ -144,4 +163,6 @@ public class FriendshipServiceTest {
         });
         _friendshipRepositoryMock.Verify(repo => repo.CancelFriendship(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
+    
+    #endregion
 }
