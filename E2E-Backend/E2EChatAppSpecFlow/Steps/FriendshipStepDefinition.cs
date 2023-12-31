@@ -9,52 +9,120 @@ namespace E2EChatAppSpecFlow.Steps;
 [Binding]
 public sealed class FriendshipStepDefinition
 {
-    // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
-
-    private readonly ScenarioContext _scenarioContext;
-
-    public FriendshipStepDefinition(ScenarioContext scenarioContext)
+    private readonly IFriendshipService _friendshipService;
+    
+    private readonly Mock<IUserRepository> _userRepository;
+    private readonly Mock<IFriendshipRepository> _friendshipRepository;
+    public FriendServiceStepDefinitions()
     {
-        _scenarioContext = scenarioContext;
+        _userRepository = new Mock<IUserRepository>();
+        _friendshipRepository = new Mock<IFriendshipRepository>();
+        _friendshipService = new FriendshipService(_friendshipRepository.Object, _userRepository.Object);
+    }
+    
+    [BeforeScenario]
+    public void SetupMocks()
+    {
+        // Inject Users 
+        List<UserModel> users = new ()
+        {
+            new UserModel { Id=1, Username= "Bo_Benson" , Email = "BB@mail.com"},
+            new UserModel { Id=2, Username= "Joe_Johnson" , Email = "JoJo@mail.com"}
+        };
+        
+        _userRepository.Setup(x => x.GetUserById(1)).ReturnsAsync(users[0]);
+        _userRepository.Setup(x => x.GetUserById(2)).ReturnsAsync(users[1]);
+    }
+    
+    [Given("there (.*) a friendship between me and the other user, initiated by (.*), and the friendship (.*) pending")]
+    public void GivenThereAFriendshipBetweenMeAndTheOtherUserInitiatedByAndTheFriendshipPending(bool? friendshipExists, int? senderUserId, bool? isPending)
+    {
+        if (friendshipExists != true) return;
+        if (senderUserId is null) {
+            throw new ArgumentException("Unknown user specified");
+        }
+        if (isPending is null) {
+            throw new ArgumentException("Pending status not specified");
+        }
+        var receiverUserId = senderUserId == 1 ? 2 : 1;
+        var friendship = new FriendshipModel {
+            SenderId = (int)senderUserId,
+            ReceiverId = receiverUserId,
+            IsPending = (bool)isPending
+        };
+        _friendshipRepository.Setup(x => x.GetFriendship((int)senderUserId, receiverUserId)).ReturnsAsync(
+            friendship);
+        _friendshipRepository.Setup(x => x.GetFriendship(receiverUserId,(int)senderUserId)).ReturnsAsync(
+            friendship);
+    }
+    
+    [When(@"(.*) sends a create request to (.*)")]
+    public void WhenSendsACreateRequestTo(int? senderId, int? receiverId)
+    {
+        if (senderId is null || receiverId is null) {
+            throw new ArgumentException("Unknown user specified");
+        }
+        _friendshipService.CreateFriendship((int)senderId, (int)receiverId);
+    }
+    
+    [Then(@"the result is: (.*)")]
+    public void ThenTheResultIs(Result result)
+    {
+        switch (result) {
+            // Create is called exactly once
+            case Result.Created:
+                _friendshipRepository.Verify(repo => 
+                    repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(1));
+                _friendshipRepository.Verify(repo => 
+                    repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                break;
+            // Confirm is called exactly once
+            case Result.Accepted:
+                _friendshipRepository.Verify(repo => 
+                    repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(1));
+                break;
+            // Nothing is ever called
+            case Result.Nothing:
+                _friendshipRepository.Verify(repo => 
+                    repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(result), result, null);
+        }
     }
 
-    [Given("the first number is (.*)")]
-    public void GivenTheFirstNumberIs(int number)
+    #region StepArgumentTransformations
+    
+    [StepArgumentTransformation]
+    public bool? IsExpressionToBoolean(string isExpression)
     {
-        //TODO: implement arrange (precondition) logic
-        // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-        // To use the multiline text or the table argument of the scenario,
-        // additional string/Table parameters can be defined on the step definition
-        // method. 
-
-        _scenarioContext.Pending();
+        return isExpression switch {
+            "is" => true,
+            "is not" => false,
+            _ => null
+        };
     }
-
-    [Given("the second number is (.*)")]
-    public void GivenTheSecondNumberIs(int number)
+    
+    [StepArgumentTransformation]
+    public int? UserExpressionToUserId(string userExpression)
     {
-        //TODO: implement arrange (precondition) logic
-        // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-        // To use the multiline text or the table argument of the scenario,
-        // additional string/Table parameters can be defined on the step definition
-        // method. 
-
-        _scenarioContext.Pending();
+        return userExpression switch {
+            "my user" => 1,
+            "other user" => 2,
+            _ => null
+        };
     }
-
-    [When("the two numbers are added")]
-    public void WhenTheTwoNumbersAreAdded()
-    {
-        //TODO: implement act (action) logic
-
-        _scenarioContext.Pending();
-    }
-
-    [Then("the result should be (.*)")]
-    public void ThenTheResultShouldBe(int result)
-    {
-        //TODO: implement assert (verification) logic
-
-        _scenarioContext.Pending();
-    }
+    
+    #endregion
 }
+
+    public enum Result
+    {
+        Created,
+        Accepted,
+         Nothing
+    }
