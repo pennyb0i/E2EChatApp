@@ -19,7 +19,7 @@ namespace E2EEChatApp.SpecFlow.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CalculatorFeature : object, Xunit.IClassFixture<CalculatorFeature.FixtureData>, System.IDisposable
+    public partial class FriendServiceFeature : object, Xunit.IClassFixture<FriendServiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace E2EEChatApp.SpecFlow.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Calculator.feature"
+#line 1 "FriendService.feature"
 #line hidden
         
-        public CalculatorFeature(CalculatorFeature.FixtureData fixtureData, E2EEChatApp_SpecFlow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public FriendServiceFeature(FriendServiceFeature.FixtureData fixtureData, E2EEChatApp_SpecFlow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,11 +40,7 @@ namespace E2EEChatApp.SpecFlow.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Calculator", @"![Calculator](https://specflow.org/wp-content/uploads/2020/09/calculator.png)
-Simple calculator for adding **two** numbers
-
-Link to a feature: [Calculator]($projectname$/Features/Calculator.feature)
-***Further read***: **[Learn more about how to generate Living Documentation](https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html)**", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "FriendService", "\tA service for creating, accepting, and cancelling friendships", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,18 +80,32 @@ Link to a feature: [Calculator]($projectname$/Features/Calculator.feature)
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add two numbers")]
-        [Xunit.TraitAttribute("FeatureTitle", "Calculator")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
-        [Xunit.TraitAttribute("Category", "mytag")]
-        public virtual void AddTwoNumbers()
+        [Xunit.SkippableTheoryAttribute(DisplayName="Create and accept Friendships")]
+        [Xunit.TraitAttribute("FeatureTitle", "FriendService")]
+        [Xunit.TraitAttribute("Description", "Create and accept Friendships")]
+        [Xunit.InlineDataAttribute("is not", "", "", "my user", "other user", "Created", new string[0])]
+        [Xunit.InlineDataAttribute("is not", "", "", "other user", "my user", "Created", new string[0])]
+        [Xunit.InlineDataAttribute("is", "my user", "is", "my user", "other user", "Nothing", new string[0])]
+        [Xunit.InlineDataAttribute("is", "my user", "is not", "my user", "other user", "Nothing", new string[0])]
+        [Xunit.InlineDataAttribute("is", "other user", "is", "my user", "other user", "Accepted", new string[0])]
+        [Xunit.InlineDataAttribute("is", "other user", "is not", "my user", "other user", "Nothing", new string[0])]
+        [Xunit.InlineDataAttribute("is", "my user", "is", "other user", "my user", "Accepted", new string[0])]
+        [Xunit.InlineDataAttribute("is", "my user", "is not", "other user", "my user", "Nothing", new string[0])]
+        [Xunit.InlineDataAttribute("is", "other user", "is", "other user", "my user", "Nothing", new string[0])]
+        [Xunit.InlineDataAttribute("is", "other user", "is not", "other user", "my user", "Nothing", new string[0])]
+        public virtual void CreateAndAcceptFriendships(string isFriendship, string friendshipMaker, string isPending, string sender, string receiver, string result, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 9
-this.ScenarioInitialize(scenarioInfo);
+            argumentsOfScenario.Add("IsFriendship", isFriendship);
+            argumentsOfScenario.Add("FriendshipMaker", friendshipMaker);
+            argumentsOfScenario.Add("IsPending", isPending);
+            argumentsOfScenario.Add("Sender", sender);
+            argumentsOfScenario.Add("Receiver", receiver);
+            argumentsOfScenario.Add("Result", result);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create and accept Friendships", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 4
+ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -114,17 +124,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 10
- testRunner.Given("the first number is 50", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+  testRunner.Given(string.Format("there {0} a friendship between me and the other user, initiated by {1}, and the f" +
+                            "riendship {2} pending", isFriendship, friendshipMaker, isPending), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 11
- testRunner.And("the second number is 70", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 6
+  testRunner.When(string.Format("{0} sends a create request to {1}", sender, receiver), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
- testRunner.When("the two numbers are added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
- testRunner.Then("the result should be 120", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+  testRunner.Then(string.Format("the result is: {0}", result), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -137,12 +145,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CalculatorFeature.FeatureSetup();
+                FriendServiceFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CalculatorFeature.FeatureTearDown();
+                FriendServiceFeature.FeatureTearDown();
             }
         }
     }
