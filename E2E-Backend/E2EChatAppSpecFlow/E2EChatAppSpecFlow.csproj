@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
+        <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57"/>
         <PackageReference Include="SpecFlow.xUnit" Version="3.9.22"/>
         <PackageReference Include="xunit" Version="2.4.1"/>
@@ -24,6 +25,10 @@
 
     <ItemGroup>
       <Folder Include="Features\API\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\E2EChatApp\E2EChatApp.csproj" />
     </ItemGroup>
 
 </Project>

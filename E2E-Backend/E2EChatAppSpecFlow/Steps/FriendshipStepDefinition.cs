@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using E2EChatApp.Core.Application.Interfaces;
+using E2EChatApp.Core.Application.Services;
+using E2EChatApp.Core.Domain.Interfaces;
+using E2EChatApp.Core.Domain.Models;
+using Moq;
 using TechTalk.SpecFlow;
 
 namespace E2EChatAppSpecFlow.Steps;
@@ -13,7 +18,7 @@ public sealed class FriendshipStepDefinition
     
     private readonly Mock<IUserRepository> _userRepository;
     private readonly Mock<IFriendshipRepository> _friendshipRepository;
-    public FriendServiceStepDefinitions()
+    public FriendshipStepDefinition()
     {
         _userRepository = new Mock<IUserRepository>();
         _friendshipRepository = new Mock<IFriendshipRepository>();
