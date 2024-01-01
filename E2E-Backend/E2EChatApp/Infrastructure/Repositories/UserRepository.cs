@@ -74,6 +74,8 @@ public class UserRepository : IUserRepository{
 
         var users = await conn.QueryAsync<UserModel>(query);
         return users.ToList();
+        
+        //        return await _userRepository.GetAllUsers(friendsOnly, currentUserId);
     }
     
     #endregion

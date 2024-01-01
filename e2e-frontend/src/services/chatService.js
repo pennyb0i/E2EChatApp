@@ -1,9 +1,11 @@
 import {API_BASE_URL} from "../api"
 import {computeSharedSecret, getPrivateKey} from "../services/diffieHellmanService";
 
-export const getMessages = async (firstUserId, secondUserId) => {
+import {getId} from "../../src/services/userService";
+
+export const getMessages = async (firstUserId) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/Message/${firstUserId}/${secondUserId}`,{
+        const response = await fetch(`${API_BASE_URL}/Message/${firstUserId}`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 'Content-Type': 'application/json',
@@ -21,7 +23,7 @@ export const getMessages = async (firstUserId, secondUserId) => {
     }
 };
 
-export const sendMessage = async (senderId, receiverId, content) => {
+export const sendMessage = async (recipientId, content) => {
     try {
         const response = await fetch(`${API_BASE_URL}/message/send`, {
             method: 'POST',
@@ -30,8 +32,7 @@ export const sendMessage = async (senderId, receiverId, content) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                senderId,
-                receiverId,
+                recipientId,
                 content,
             }),
         });
