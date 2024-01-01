@@ -50,8 +50,8 @@ public class SecurityServiceTest {
     public async Task GenerateJwtToken_ShouldReturnNull_WhenUserDoesNotExist()
     {
         // Arrange
-        string email = "test@test.com";
-        string password = "password";
+        const string email = "test@test.com";
+        const string password = "password";
         _mockUserRepository.Setup(repo => repo.GetUserByEmail(email)).ReturnsAsync(() => null);
         // Act
         var result = await _securityService.GenerateJwtToken(email, password);
@@ -97,7 +97,7 @@ public class SecurityServiceTest {
     public async Task EmailExists_ShouldReturnTrue_WhenEmailExists()
     {
         // Arrange
-        string email = "test@test.com";
+        const string email = "test@test.com";
         var user = new UserModel();
         _mockUserRepository.Setup(repo => repo.GetUserByEmail(email)).ReturnsAsync(user);
         // Act
@@ -110,7 +110,7 @@ public class SecurityServiceTest {
     public async Task EmailExists_ShouldReturnFalse_WhenEmailDoesNotExists()
     {
         // Arrange
-        string email = "test@test.com";
+        const string email = "test@test.com";
         _mockUserRepository.Setup(repo => repo.GetUserByEmail(email)).ReturnsAsync(() => null);
         // Act
         var result = await _securityService.EmailExists(email);

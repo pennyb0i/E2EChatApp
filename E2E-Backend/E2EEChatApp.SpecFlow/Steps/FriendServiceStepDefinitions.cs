@@ -3,7 +3,7 @@ using E2EChatApp.Core.Application.Services;
 using E2EChatApp.Core.Domain.Interfaces;
 using E2EChatApp.Core.Domain.Models;
 using Moq;
-namespace E2EEChatApp.SpecFlow;
+namespace E2EEChatApp.SpecFlow.Steps;
 
 [Binding]
 public class FriendServiceStepDefinitions {

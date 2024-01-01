@@ -1,3 +1,4 @@
+using E2EChatApp.Core.Application.Interfaces;
 using Moq;
 using E2EChatApp.Core.Application.Services;
 using E2EChatApp.Core.Domain.Interfaces;
@@ -10,17 +11,19 @@ namespace E2EEChatApp.UnitTests.Core.Application.Services;
 [TestSubject(typeof(UserService))]
 public class UserServiceTest {
     private readonly Mock<IUserRepository> _userRepositoryMock;
+    private readonly IUserService _userService;
 
     public UserServiceTest()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
+        _userService = new UserService(_userRepositoryMock.Object);
     }
 
     [Fact]
     public async Task GetAllUsers_ShouldReturnCorrectResult()
     {
         // Arrange
-        var allUsers = new List<UserDto>() {
+        var allUsers = new List<UserDto> {
             new() {
                 Id = 1,
                 Email = "test1@example.com"
@@ -33,8 +36,7 @@ public class UserServiceTest {
         _userRepositoryMock.Setup(x => x.GetAllUsers(It.IsAny<bool?>(), It.IsAny<int>())).ReturnsAsync(allUsers);
 
         // Act
-        var userService = new UserService(_userRepositoryMock.Object);
-        var result = await userService.GetAllUsers(true, 1);
+        var result = await _userService.GetAllUsers(true, 1);
 
         // Assert
         Assert.Equal(allUsers, result);
@@ -52,8 +54,7 @@ public class UserServiceTest {
         _userRepositoryMock.Setup(x => x.GetUserById(It.IsAny<int>())).ReturnsAsync(user);
 
         // Act
-        var userService = new UserService(_userRepositoryMock.Object);
-        var result = await userService.GetUserById(user.Id);
+        var result = await _userService.GetUserById(user.Id);
 
         // Assert
         Assert.Equal(user, result);
@@ -63,13 +64,13 @@ public class UserServiceTest {
     public async Task GetUsers_ShouldReturnCorrectResult()
     {
         // Arrange
-        var users = new List<UserModel>() {
-            new UserModel {
+        var users = new List<UserModel> {
+            new() {
                 Id = 1,
                 Email = "test1@example.com",
                 Username = "Test1"
             },
-            new UserModel {
+            new() {
                 Id = 2,
                 Email = "test2@example.com",
                 Username = "Test2"
@@ -78,8 +79,7 @@ public class UserServiceTest {
         _userRepositoryMock.Setup(x => x.GetUsers()).ReturnsAsync(users);
 
         // Act
-        var userService = new UserService(_userRepositoryMock.Object);
-        var result = await userService.GetUsers();
+        var result = await _userService.GetUsers();
 
         // Assert
         Assert.Equal(users, result);
