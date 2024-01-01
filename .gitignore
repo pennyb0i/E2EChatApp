@@ -478,3 +478,8 @@ fabric.properties
 .DS_Store
 .idea
 E2E-Backend/docker-compose.yml
+
+### SpecFlow ###
+# Feature Files
+*.feature.cs
+*.feature.xlsx.*

@@ -7,14 +7,19 @@ namespace E2EChatApp.Core.Application.Services;
 
 public class FriendshipService : IFriendshipService{
     private readonly IFriendshipRepository _friendshipRepository;
+    private readonly IUserRepository _userRepository;
 
-    public FriendshipService(IFriendshipRepository friendshipRepository)
+    public FriendshipService(IFriendshipRepository friendshipRepository, IUserRepository userRepository)
     {
         _friendshipRepository = friendshipRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<List<FriendshipModel>> GetAllFriendshipsByUserId(int userId)
     {
+        if (await _userRepository.GetUserById(userId) is null) {
+            throw new RestException(HttpStatusCode.NotFound, $"User with id {userId} not found!");
+        }
         return await _friendshipRepository.GetFriendshipsByUserId(userId);
     }
 

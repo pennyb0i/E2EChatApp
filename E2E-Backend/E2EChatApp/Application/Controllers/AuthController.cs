@@ -1,7 +1,6 @@
 using System.Net;
 using E2EChatApp.Core.Application.Interfaces;
 using E2EChatApp.Core.Domain.Dtos;
-using E2EChatApp.Core.Domain.Entities;
 using E2EChatApp.Core.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

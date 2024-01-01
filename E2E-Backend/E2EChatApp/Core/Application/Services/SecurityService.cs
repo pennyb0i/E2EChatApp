@@ -39,14 +39,14 @@ public class SecurityService: ISecurityService
             
             var claims = new List<Claim>
             {
-                new Claim("Username", user.Username),
-                new Claim("UserId", user.Id.ToString())
+                new("Username", user.Username),
+                new("UserId", user.Id.ToString())
             };
             
             var token = new JwtSecurityToken(Configuration["Jwt:Issuer"],
                 Configuration["Jwt:Audience"],
                 claims:claims,
-                expires: DateTime.Now.AddMinutes(Configuration.GetSection("Jwt").GetValue<int>("ExpirationMinutes")),
+                expires: DateTime.Now.AddMinutes(Convert.ToInt32(Configuration["Jwt:ExpirationMinutes"])),
                 signingCredentials: credentials
             );
             return new TokenDto
