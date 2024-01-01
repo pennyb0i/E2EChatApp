@@ -1,9 +1,22 @@
-﻿Feature: User
-	Simple calculator for adding two numbers
+﻿Feature: User Service Testing
 
-@mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+    Scenario: Get all users
+        Given I am a logged-in user with ID "<currentUserId>"
+        When I request all users with friendsOnly set to "<friendsOnly>"
+        Then I should receive a list of users
+        
+    Examples:
+      | currentUserId | friendsOnly |
+      | 1             | true        |
+      | 2             | true        |
+
+    Scenario: Get a user by ID
+        Given I have a user ID "<userId>"
+        When I request user details for that ID
+        Then I should receive the user details
+        
+    Examples:
+      | userId |
+      | 1      |
+      | 2      |
+      

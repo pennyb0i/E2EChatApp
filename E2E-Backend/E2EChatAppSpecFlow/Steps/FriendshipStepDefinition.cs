@@ -129,5 +129,5 @@ public sealed class FriendshipStepDefinition
     {
         Created,
         Accepted,
-         Nothing
+        Nothing
     }

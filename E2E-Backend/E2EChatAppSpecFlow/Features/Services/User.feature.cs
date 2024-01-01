@@ -19,7 +19,7 @@ namespace E2EChatAppSpecFlow.Features.Services
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class UserFeature : object, Xunit.IClassFixture<UserFeature.FixtureData>, System.IDisposable
+    public partial class UserServiceTestingFeature : object, Xunit.IClassFixture<UserServiceTestingFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace E2EChatAppSpecFlow.Features.Services
 #line 1 "User.feature"
 #line hidden
         
-        public UserFeature(UserFeature.FixtureData fixtureData, E2EChatAppSpecFlow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public UserServiceTestingFeature(UserServiceTestingFeature.FixtureData fixtureData, E2EChatAppSpecFlow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace E2EChatAppSpecFlow.Features.Services
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Services", "User", "\tSimple calculator for adding two numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Services", "User Service Testing", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,18 +80,20 @@ namespace E2EChatAppSpecFlow.Features.Services
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add two numbers")]
-        [Xunit.TraitAttribute("FeatureTitle", "User")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
-        [Xunit.TraitAttribute("Category", "mytag")]
-        public virtual void AddTwoNumbers()
+        [Xunit.SkippableTheoryAttribute(DisplayName="Get all users")]
+        [Xunit.TraitAttribute("FeatureTitle", "User Service Testing")]
+        [Xunit.TraitAttribute("Description", "Get all users")]
+        [Xunit.InlineDataAttribute("1", "true", new string[0])]
+        [Xunit.InlineDataAttribute("2", "true", new string[0])]
+        public virtual void GetAllUsers(string currentUserId, string friendsOnly, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 5
-this.ScenarioInitialize(scenarioInfo);
+            argumentsOfScenario.Add("currentUserId", currentUserId);
+            argumentsOfScenario.Add("friendsOnly", friendsOnly);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get all users", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 3
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -110,17 +112,58 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 4
+        testRunner.Given(string.Format("I am a logged-in user with ID \"{0}\"", currentUserId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 5
+        testRunner.When(string.Format("I request all users with friendsOnly set to \"{0}\"", friendsOnly), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 6
- testRunner.Given("the first number is 50", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Then("I should receive a list of users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 7
- testRunner.And("the second number is 70", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Get a user by ID")]
+        [Xunit.TraitAttribute("FeatureTitle", "User Service Testing")]
+        [Xunit.TraitAttribute("Description", "Get a user by ID")]
+        [Xunit.InlineDataAttribute("1", new string[0])]
+        [Xunit.InlineDataAttribute("2", new string[0])]
+        public virtual void GetAUserByID(string userId, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("userId", userId);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a user by ID", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 13
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
-#line 8
- testRunner.When("the two numbers are added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 14
+        testRunner.Given(string.Format("I have a user ID \"{0}\"", userId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 9
- testRunner.Then("the result should be 120", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
+        testRunner.When("I request user details for that ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 16
+        testRunner.Then("I should receive the user details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -133,12 +176,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UserFeature.FeatureSetup();
+                UserServiceTestingFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UserFeature.FeatureTearDown();
+                UserServiceTestingFeature.FeatureTearDown();
             }
         }
     }
