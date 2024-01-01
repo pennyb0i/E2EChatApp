@@ -63,6 +63,15 @@ public class FriendServiceStepDefinitions {
         _friendshipService.CreateFriendship((int)senderId, (int)receiverId);
     }
     
+    [When(@"(.*) sends a cancel request to (.*)")]
+    public void WhenMyUserSendsACancelRequestToOtherUser(int? senderId, int? receiverId)
+    {
+        if (senderId is null || receiverId is null) {
+            throw new ArgumentException("Unknown user specified");
+        }
+        _friendshipService.CancelFriendship((int)senderId, (int)receiverId);
+    }
+    
     [Then(@"the result is: (.*)")]
     public void ThenTheResultIs(Result result)
     {
@@ -73,6 +82,8 @@ public class FriendServiceStepDefinitions {
                     repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(1));
                 _friendshipRepository.Verify(repo => 
                     repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.CancelFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
                 break;
             // Confirm is called exactly once
             case Result.Accepted:
@@ -80,6 +91,8 @@ public class FriendServiceStepDefinitions {
                     repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
                 _friendshipRepository.Verify(repo => 
                     repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(1));
+                _friendshipRepository.Verify(repo => 
+                    repo.CancelFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
                 break;
             // Nothing is ever called
             case Result.Nothing:
@@ -87,6 +100,16 @@ public class FriendServiceStepDefinitions {
                     repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
                 _friendshipRepository.Verify(repo => 
                     repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.CancelFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                break;
+            case Result.Cancelled:
+                _friendshipRepository.Verify(repo => 
+                    repo.CreateFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.ConfirmFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(0));
+                _friendshipRepository.Verify(repo => 
+                    repo.CancelFriendship(It.IsAny<int>(),It.IsAny<int>()),Times.Exactly(1));
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(result), result, null);
@@ -122,5 +145,6 @@ public enum Result
 {
     Created,
     Accepted,
-    Nothing
+    Nothing,
+    Cancelled
 }

@@ -18,3 +18,21 @@ Feature: FriendService
 		  | is           | my user         | is not    | other user | my user    | Nothing  |
 		  | is           | other user      | is        | other user | my user    | Nothing  |
 		  | is           | other user      | is not    | other user | my user    | Nothing  |
+    
+	Scenario Outline: Decline and remove friendships
+		Given there <IsFriendship> a friendship between me and the other user, initiated by <FriendshipMaker>, and the friendship <IsPending> pending
+		When <Sender> sends a cancel request to <Receiver>
+		Then the result is: <Result>
+
+		Examples:
+		  | IsFriendship | FriendshipMaker | IsPending | Sender     | Receiver   | Result    |
+		  | is not       |                 |           | my user    | other user | Nothing   |
+		  | is not       |                 |           | other user | my user    | Nothing   |
+		  | is           | my user         | is        | my user    | other user | Cancelled |
+		  | is           | my user         | is not    | my user    | other user | Cancelled |
+		  | is           | other user      | is        | my user    | other user | Cancelled |
+		  | is           | other user      | is not    | my user    | other user | Cancelled |
+		  | is           | my user         | is        | other user | my user    | Cancelled |
+		  | is           | my user         | is not    | other user | my user    | Cancelled |
+		  | is           | other user      | is        | other user | my user    | Cancelled |
+		  | is           | other user      | is not    | other user | my user    | Cancelled |
