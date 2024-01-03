@@ -26,11 +26,13 @@ public class UserServiceTest {
         var allUsers = new List<UserDto> {
             new() {
                 Id = 1,
-                Email = "test1@example.com"
+                Email = "test1@example.com",
+                Username = "test1"
             },
             new() {
                 Id = 2,
-                Email = "test2@example.com"
+                Email = "test2@example.com",
+                Username = "test2"
             }
         };
         _userRepositoryMock.Setup(x => x.GetAllUsers(It.IsAny<bool?>(), It.IsAny<int>())).ReturnsAsync(allUsers);
