@@ -4,7 +4,7 @@ import Message from "../chat/components/message";
 import './chat.css'
 import * as signalR from "@microsoft/signalr";
 
-import {getAllUsers, getId} from "../../services/userService";
+import {getAllFriends, getAllUsers, getId} from "../../services/userService";
 
 import {getMessages, getSharedSecret, sendMessage} from '../../services/chatService';
 
@@ -64,7 +64,7 @@ const Chat = () => {
     async function loadUsers() {
         try {
             setLoadingFriends(true);
-            const result = await getAllUsers();
+            const result = await getAllFriends();
             const filteredFriends = result.filter(user => user.id.toString() !== loggedUserId);
             setFriends(filteredFriends);
             setLoadingFriends(false);
