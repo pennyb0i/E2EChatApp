@@ -36,13 +36,14 @@ const Chat = () => {
         try {
             const secret = getSharedSecret(friend);
             setLoadingChat(true);
-            const messagesEncrypted = await getMessages(myId, friend.id);
+            const messagesEncrypted = await getMessages(friend.id);
 
             const messagesDecrypted = await decryptMessages(messagesEncrypted, secret);
 
             setLoadingChat(false);
 
             setMessages(messagesDecrypted);
+            console.log(messages);
         } catch (e) {
 
         }
@@ -78,7 +79,7 @@ const Chat = () => {
         const encryptedText = encryptData(inputValue, secret);
 
         try {
-            const result = await sendMessage(loggedUserId, selectedFriend.id, encryptedText);
+            const result = await sendMessage(selectedFriend.id, encryptedText);
             //send message signal
             if (result) {
                 setInputValue("");
