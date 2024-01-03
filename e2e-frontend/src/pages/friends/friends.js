@@ -82,7 +82,7 @@ const Friends = () => {
                             <ul className="friends-list">
                                 {filteredUsers.map((user, index) => (
                                     <li key={index}>
-                                        <span>{user.email}</span>
+                                        <span>{user.username}</span>
                                         <button onClick={() => sendFriendRequest(user.id)}>
                                             Add Friend
                                         </button>
@@ -102,7 +102,7 @@ const Friends = () => {
                     <ul className="request-list">
                         {requests.map((request, index) => (
                             <li key={index}>
-                                {request.sender.email}
+                                {request.sender.username}
                                 <div className="button-container">
                                     <button onClick={() => sendFriendRequest(request.sender.id)}>
                                         Accept
