@@ -26,8 +26,8 @@ export const getAllFriendRequests = async () => {
         const result = await response.json();
 
         const userRequests = result.filter(request =>
-            request.isPending ||
-            (request.senderId != getId() && request.receiverId != getId())
+            request.isPending &&
+            (request.sender.id !== getId() && request.receiver.id == getId())
         );
 
         return userRequests;

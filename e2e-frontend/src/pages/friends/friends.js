@@ -31,8 +31,8 @@ const Friends = () => {
 
     const filteredUsers = searchValue
         ? users.filter((user) =>
-            typeof user.email === 'string' &&
-            user.email.toLowerCase().includes(searchValue.trim().toLowerCase())
+            typeof user.username === 'string' &&
+            user.username.toLowerCase().includes(searchValue.trim().toLowerCase())
         )
         : users;
 
