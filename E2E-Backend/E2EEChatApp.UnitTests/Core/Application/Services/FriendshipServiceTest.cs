@@ -20,7 +20,8 @@ public class FriendshipServiceTest {
     {
         _friendshipService = new FriendshipService(_friendshipRepositoryMock.Object, _userRepositoryMock.Object);
     }
-    
+
+    #region Data
     public class AddTestData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
@@ -29,6 +30,11 @@ public class FriendshipServiceTest {
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+    
+    public static IEnumerable<object[]> GetTestCases()
+    {
+        yield return new object[] { 1, 2 };  
     }
     
     public class JsonTestData : IEnumerable<object[]>
@@ -46,6 +52,8 @@ public class FriendshipServiceTest {
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
+    #endregion
+
     
     #region GetAllFriendshipsByUserId method
     
@@ -142,12 +150,13 @@ public class FriendshipServiceTest {
         _friendshipRepositoryMock.Verify(repo => repo.ConfirmFriendship(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
     }
 
-    [Fact]
-    public async Task CreateFriendship_FriendshipRequestFromUserExists_ThrowsException()
+    [Theory]
+    [MemberData(nameof(GetTestCases))]
+    public async Task CreateFriendship_FriendshipRequestFromUserExists_ThrowsException(int senderIdArg,int receiverIdArg)
     {
         // Arrange
-        const int senderId = 1;
-        const int receiverId = 2;
+        int senderId = senderIdArg;
+        int receiverId = receiverIdArg;
         
         var existingFriendship = new FriendshipModel {
             SenderId = senderId,
