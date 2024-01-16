@@ -1,3 +1,6 @@
 [
-  { "FirstUserId": 2, "SecondUserId": 3}
+  { "FirstUserId": 2, "SecondUserId": 3},
+  { "FirstUserId": 5, "SecondUserId": 6},
+  { "FirstUserId": 9, "SecondUserId": 10},
+  { "FirstUserId": 4, "SecondUserId": 2}
 ]
