@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="create user with username &amp; public key">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="1215bf88-67ec-405c-b0fd-74dcc0b028b7" name="Changes" comment="create user with username &amp; public key" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,6 +85,7 @@
       <workItem from="1703449459455" duration="86000" />
       <workItem from="1703462004620" duration="3631000" />
       <workItem from="1703543759986" duration="62000" />
+      <workItem from="1704792195059" duration="45000" />
     </task>
     <task id="LOCAL-00001" summary="swagger">
       <option name="closed" value="true" />

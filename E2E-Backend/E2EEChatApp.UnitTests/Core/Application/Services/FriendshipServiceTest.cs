@@ -4,7 +4,9 @@ using E2EChatApp.Core.Domain.Models;
 using E2EChatApp.Core.Domain.Exceptions;
 using JetBrains.Annotations;
 using E2EChatApp.Core.Application.Interfaces;
+using E2EEChatApp.UnitTests.Core.Models;
 using Moq;
+using Newtonsoft.Json;
 
 namespace E2EEChatApp.UnitTests.Core.Application.Services;
 
@@ -17,6 +19,32 @@ public class FriendshipServiceTest {
     public FriendshipServiceTest()
     {
         _friendshipService = new FriendshipService(_friendshipRepositoryMock.Object, _userRepositoryMock.Object);
+    }
+    
+    public class AddTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 1,2 }; 
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+    
+    public class JsonTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            var json = File.ReadAllText("../../../data/data.json");
+            var testDataList = JsonConvert.DeserializeObject<List<TestData>>(json);
+
+            foreach (var testData in testDataList)
+            {
+                yield return new object[] { testData.FirstUserId, testData.SecondUserId };
+            }
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
     
     #region GetAllFriendshipsByUserId method
@@ -53,12 +81,13 @@ public class FriendshipServiceTest {
 
     #region CreateFriendship method
     
-    [Fact]
-    public async Task CreateFriendship_NoFriendship_CreatesFriendship()
+    [Theory]
+    [InlineData(1,2)]
+    public async Task CreateFriendship_NoFriendship_CreatesFriendship(int senderIdArg,int receiverIdArg)
     {
         // Arrange
-        const int senderId = 1;
-        const int receiverId = 2;
+        int senderId = senderIdArg;
+        int receiverId = receiverIdArg;
         
         // No friendship exists
         _friendshipRepositoryMock.Setup(repo =>
@@ -73,12 +102,13 @@ public class FriendshipServiceTest {
         // Assert
         _friendshipRepositoryMock.Verify(repo => repo.CreateFriendship(senderId, receiverId), Times.Once);
     }
-    [Fact]
-    public async Task CreateFriendship_FriendshipExists_ThrowsException()
+    [Theory]
+    [ClassData(typeof(AddTestData))]
+    public async Task CreateFriendship_FriendshipExists_ThrowsException(int senderIdArg,int receiverIdArg)
     {
         // Arrange 
-        const int senderId = 1;
-        const int receiverId = 2;
+        int senderId = senderIdArg;
+        int receiverId = receiverIdArg;
         
         var existingFriendship = new FriendshipModel {
             SenderId = receiverId,
@@ -91,12 +121,13 @@ public class FriendshipServiceTest {
         _friendshipRepositoryMock.Verify(repo => repo.CreateFriendship(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
     }
     
-    [Fact]
-    public async Task CreateFriendship_FriendshipRequestForUserExists_IsAccepted()
+    [Theory]
+    [ClassData(typeof(JsonTestData))]
+    public async Task CreateFriendship_FriendshipRequestForUserExists_IsAccepted(int firstUserId, int secondUserId)
     {
         // Arrange
-        const int currentUserId = 1;
-        const int otherUserId = 2;
+        int currentUserId = firstUserId;
+        int otherUserId = secondUserId;
         
         var existingFriendship = new FriendshipModel {
             SenderId = otherUserId,

@@ -28,4 +28,6 @@
       <ProjectReference Include="..\E2EChatApp\E2EChatApp.csproj" />
     </ItemGroup>
 
+
+
 </Project>
